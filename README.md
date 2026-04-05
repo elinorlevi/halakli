@@ -123,15 +123,6 @@
 - העלאת תמונות
 
 ---
-
-## ▶️ איך מריצים
-
-```bash
-npm install
-npm run start
-
----
-
 ## 🎥 Demo Video
 
 ### 👤website
@@ -155,6 +146,16 @@ npm run start
 
 ### Product page Page
 ![Product page](assets/screenshots/Product_page.png)
+
+
+## ▶️ איך מריצים
+
+```bash
+npm install
+npm run start
+
+---
+
 
 ### Products
 ![Products ](assets/screenshots/Products.png)
