@@ -147,6 +147,13 @@
 ### Product page Page
 ![Product page](assets/screenshots/Product_page.png)
 
+### Products
+![Products ](assets/screenshots/Products.png)
+
+### 🛒 Cart / Checkout
+![Cart](assets/screenshots/Shopping_cart.png)
+
+
 
 ## ▶️ איך מריצים
 
@@ -157,10 +164,5 @@ npm run start
 ---
 
 
-### Products
-![Products ](assets/screenshots/Products.png)
-
-### 🛒 Cart / Checkout
-![Cart](assets/screenshots/Shopping_cart.png)
 
 ---
