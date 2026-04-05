@@ -1,0 +1,821 @@
+/* ===== רקע אחיד לכל אזור האדמין ===== */
+.admin-shell {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  background-color: #fae8e8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: rgb(255, 255, 255);
+  /* שכבת dark overlay עדינה כדי לתת אווירת דשבורד כהה */
+  position: relative;
+  box-sizing: border-box;
+  padding-right: 20px;
+  isolation: isolate;
+}
+.admin-shell::after {
+  content: "";
+  position: absolute;
+
+  inset: 0;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 224, 239, 0.25) 0%,
+      rgba(0, 0, 0, 0) 60%
+    ),
+    radial-gradient(
+      circle at 80% 60%,
+      rgba(32, 34, 33, 0.18) 0%,
+      rgba(0, 0, 0, 0) 60%
+    ),
+    rgba(0, 0, 0, 0.6);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* כל מה שבפנים צריך להיות מעל האוברליי */
+.admin-shell-inner {
+  position: relative;
+  z-index: 1;
+  display: contents; /* כדי לא להרוס את ה-grid של ה-layout */
+}
+
+/* ===== סיידבר (כמו משמאל בצילום) ===== */
+.admin-shell-aside {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.07);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  min-height: 100vh;
+  border-radius: 20px;
+}
+
+/* הניווט בסיידבר */
+.admin-nav-list {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+}
+
+.adm-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #fff;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease;
+  width: 215px;
+  left: 15px;
+}
+
+.adm-link.is-active {
+  background: rgba(0, 0, 0, 0.071);
+}
+
+/* הפס הזוהר בצד */
+.adm-link.is-active::before {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(239, 239, 239, 0.9) 30%,
+    rgb(249, 255, 253) 100%
+  );
+  box-shadow:
+    0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 12px rgba(255, 255, 255, 0.6),
+    0 0 24px rgba(255, 255, 255, 0.4);
+}
+
+.adm-link-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.adm-link-icon {
+  font-size: 14px;
+  line-height: 1;
+  color: #ffffff;
+  min-width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== איזור התוכן ===== */
+.admin-shell-main {
+  min-height: 100vh;
+  padding: 24px;
+  overflow-y: auto;
+
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  gap: 16px;
+  color: #fff;
+}
+
+/* wrapper של כרטיס/טבלה כמו באמצע ובימין בסקרינשוט */
+.adm-panel {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 254, 254, 0.247);
+  border-radius: 16px;
+  padding: 16px 20px;
+  color: #eee;
+}
+
+/* כותרות פנימיות */
+.adm-panel h1,
+.adm-panel h2,
+.adm-panel h3 {
+  margin: 0;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* תיאור קטן מתחת לכותרת */
+.adm-desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* כפתורים עליונים (Export / New Order בסקרינשוט) */
+.adm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.adm-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== טבלה ===== */
+
+.adm-table {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* כותרת הטבלה (thead) */
+.adm-thead {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-weight: 600;
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* שורה */
+.adm-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  line-height: 1.4;
+}
+.adm-row:last-child {
+  border-bottom: 0;
+}
+.adm-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* טקסט צבעוני לסטטוס */
+.adm-status-ok {
+  color: rgb(84, 98, 94);
+  font-weight: 500;
+}
+.adm-status-warn {
+  color: rgb(255, 180, 0);
+  font-weight: 500;
+}
+.adm-status-bad {
+  color: rgb(255, 70, 70);
+  font-weight: 500;
+}
+
+/* באדג' קטן */
+.adm-badge {
+  display: inline-block;
+  background: rgba(237, 175, 241, 0.12);
+  border: 1px solid rgba(213, 157, 215, 0.4);
+  font-size: 11px;
+  line-height: 1.2;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(239, 200, 237, 0.081);
+}
+
+/* לינק פעולה קטן */
+.adm-link-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.adm-link-btn:hover {
+  color: #fff;
+}
+
+/* כרטיסיות מידע */
+.adm-sidepanel {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  color: #eee;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.adm-sidepanel h2 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+.adm-sidepanel-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2px;
+}
+.adm-sidepanel-value {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+}
+
+.adm-user-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.adm-user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+  max-width: 180px;
+}
+
+.adm-user-line1 {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(180, 200, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.adm-user-line2 {
+  font-size: 17px;
+  font-weight: 400;
+  color: rgb(255, 250, 250);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.adm-user-avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.186);
+  box-shadow: 0 2px 40px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.adm-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.adm-user-line1 {
+  line-height: 1;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+}
+
+.adm-user-logo {
+  max-width: 140px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+/* קו זוהר בסיסי - מבנה כללי */
+.hl-line {
+  position: absolute;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(240, 240, 240, 0.9) 40%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  box-shadow:
+    0 0 4px rgba(255, 255, 255, 0.9),
+    0 0 12px rgba(255, 255, 255, 0.5),
+    0 0 24px rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+.hl-divider {
+  width: 90%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.22) 10%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.22) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.;
+}
+
+/* קונטיינר גדול */
+.adm-panel-group {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  color: #eee;
+
+  padding: 16px 20px;
+
+  display: grid;
+  gap: 24px;
+}
+
+.adm-group-header {
+  display: grid;
+  gap: 8px;
+}
+
+.adm-group-body {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+}
+
+.adm-inner-block {
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.adm-inner-block-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  text-align: right;
+}
+
+.adm-inner-block-desc {
+  margin: 4px 0 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+}
+
+.adm-panel-group {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9);
+  color: #fff;
+  display: grid;
+  gap: 20px;
+}
+
+.adm-group-body {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+}
+
+.adm-inner-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+
+/* העטיפה הכללית של הדרופדאון */
+.adm-range-wrapper {
+  position: relative;
+  font-family: inherit;
+  direction: rtl;
+}
+
+/* הכפתור הסגור */
+.adm-range-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+
+  padding: 6px 10px;
+  min-width: 70px;
+
+  cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: inherit;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.adm-range-trigger:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.adm-range-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.adm-range-arrow-icon {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.adm-range-label {
+  font-size: 12px;
+  color: #fff;
+}
+
+/* התפריט הפתוח */
+.adm-range-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 100%;
+
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.9),
+    0 4px 16px rgba(0, 0, 0, 0.8);
+
+  padding: 4px 0;
+  z-index: 9999;
+}
+
+/* כל אופציה בתוך הרשימה */
+.adm-range-item {
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.4;
+  direction: rtl;
+}
+
+.adm-range-item-active {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.adm-icon-thick {
+  font-size: 1.2em;
+  font-weight: 900;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+}
+
+/* כרטיס כללי לבלוק הקופונים */
+.admin-coupons-block {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.03)
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* עטיפה לטבלה */
+.admin-coupons-table-wrapper {
+  margin-top: 10px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(8, 8, 9, 0.541);
+}
+
+/* הטבלה עצמה */
+.admin-coupons-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* כותרות */
+.admin-coupons-table thead {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.05)
+  );
+}
+
+.admin-coupons-table th {
+  padding: 10px 14px;
+  text-align: right;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* שורות */
+.admin-coupons-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* צבע רקע שורה לפי מצב */
+.coupon-row.is-active {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.coupon-row.is-inactive {
+  background: rgba(40, 40, 40, 0.6);
+  opacity: 0.75;
+}
+
+/* כשעוברים עם העכבר */
+.coupon-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* קוד קופון – טיפוגרפיה */
+.coupon-code {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ערכים מיושרים */
+.coupon-value,
+.coupon-min {
+  text-align: left;
+  direction: ltr;
+}
+
+/* סטטוס – צ'יפ עגול */
+.coupon-status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.chip-active {
+  background: rgba(31, 46, 41, 0.18);
+  color: #070b09;
+  border: 1px solid rgba(8, 11, 10, 0.6);
+}
+
+.chip-inactive {
+  background: rgba(180, 60, 60, 0.15);
+  color: #ffc2c2;
+  border: 1px solid rgba(255, 120, 120, 0.65);
+}
+
+/* כפתורי פעולות */
+.coupon-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.coupon-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+}
+
+.coupon-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.coupon-btn-toggle {
+  border-color: rgba(120, 210, 255, 0.7);
+}
+
+.coupon-btn-danger {
+  border-color: rgba(255, 120, 120, 0.8);
+  color: #ff9b9b;
+}
+
+.coupon-btn-danger:hover {
+  background: rgba(255, 80, 80, 0.18);
+}
+
+/* ======================= */
+/*   תוספת: חץ במובייל    */
+/* ======================= */
+
+/* שה-header יוכל להכיל כפתור ממוקם */
+.adm-user-header {
+  position: relative;
+}
+
+/* כפתור החץ (פתיחה/סגירה) – ברירת מחדל מוסתרת (בדסקטופ) */
+.admin-menu-toggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #ffffff;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.08s ease;
+  display: none; /* יוצג רק במובייל */
+}
+
+.admin-menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ===== מובייל ===== */
+@media (max-width: 768px) {
+  /* הלייאאוט הכללי: טור אחד, בלי grid כבד */
+  .admin-shell {
+    display: block;
+    grid-template-columns: 1fr;
+    padding-right: 0;
+    padding-left: 0;
+    background-attachment: scroll;
+  }
+
+  .admin-shell-inner {
+    display: block;
+  }
+
+  .admin-shell-main {
+    padding: 16px 12px;
+    min-height: calc(100vh - 40px);
+  }
+
+  /* הסיידבר הופך למגירה מימין */
+  .admin-shell-aside {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;   /* בצד ימין */
+    inset-inline-end: auto;
+    width: 78%;
+    max-width: 320px;
+    border-radius: 0 0 0 20px;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.9);
+    z-index: 40;
+    min-height: 100vh;
+  }
+
+  /* לינקים – ברוחב מלא, בלי left */
+  .adm-link {
+    width: 100%;
+    left: 0;
+  }
+
+  /* החצים מופיעים רק במובייל */
+  .admin-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* חץ סגירה – בתוך הסיידבר, בצד ימין למעלה */
+  .admin-menu-toggle--close {
+    position: absolute;
+    top: 6px;
+    inset-inline-end: -22px; /* ימין ב-RTL */
+    z-index: 50;
+  }
+
+  /* חץ פתיחה צף – מחוץ לסיידבר, בצד ימין עליון */
+  .admin-menu-toggle--floating {
+    position: fixed;
+    top: 10px;
+    inset-inline-start: 10px; /* ימין */
+    z-index: 60;
+    background: rgba(0, 0, 0, 0.278);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-shell-aside {
+    background: #1f1f1ff9;        /* או #111 / #191919 – בלי שקיפות */
+    backdrop-filter: none;   /* אם את לא רוצה אפקט זכוכית במובייל */
+    -webkit-backdrop-filter: none;
+  }
+}

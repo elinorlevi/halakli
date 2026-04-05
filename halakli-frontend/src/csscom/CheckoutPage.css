@@ -1,0 +1,268 @@
+/* ===== Checkout (bridge styles) ===== */
+.acct-section.checkout{
+  --brand:#111;
+  --brand-acc:#f8949c;
+  --muted:#666;
+  --border:#ddd;
+  --card-shadow: 0 4px 40px #f8949c1b;
+}
+/* שלושה שדות קומפקטיים בשורה אחת */
+.co-row.co-inline{
+  display: flex !important;
+  gap: 10px !important;
+  align-items: flex-start !important;
+  flex-wrap: nowrap !important;
+  direction: rtl;
+}
+
+/* כל קופסה ברוחב קטן; כווני בין 160–200px לפי המקום בראש העמוד */
+.co-row.co-inline .co-col--sm{
+  flex: 0 0 18px !important;
+}
+
+/* מיישר רק את ה-label לימין (לא נוגע ב-input) */
+.co-row.co-inline .co-col--sm > .acct-label{
+  display: block !important;
+  text-align: right !important;
+}
+
+/* שדות קטנים יותר */
+.acct-input.acct-input--sm{
+  height: 36px !important;
+  padding: 6px 10px !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  width: 130px;
+}
+
+/* במסכים צרים – לאפשר ירידה לשתי/שלוש שורות */
+@media (max-width: 600px){
+  .co-row.co-inline{ flex-wrap: wrap !important; }
+  .co-row.co-inline .co-col--sm{
+    flex: 1 1 160px !important;
+    max-width: none !important;
+  }
+}
+
+/* אופציונלי: לקריאות מספרים ב-RTL */
+.acct-input--sm[type="tel"]{
+  direction: ltr;
+  text-align: left;
+}
+
+/* רק הלייבל לימין */
+.label-right{
+  display:block !important;
+  text-align:right !important;
+}
+
+/* רק ה-input הזה לשמאל/LTR (לא נוגע בשאר) */
+.ltr-input{
+  direction:ltr !important;
+  text-align:left !important;
+}
+
+/* תיבת ההערות: ריסייז רק לגובה, לא לרוחב */
+textarea.acct-input,
+.acct-input--notes {
+  resize: vertical;     /* מונע שינוי רוחב */
+  width: 100%;
+  max-width: 100%;
+  min-height: 90px;     /* תוכלי לשנות לפי טעם */
+  max-height: 360px;    /* תקרה נחמדה כדי שלא תתארך בלי סוף */
+  box-sizing: border-box;
+  flex: 0 0 auto;       /* לא לגדול כדי "להתאים" לקונטיינר */
+}
+
+/* מבטל השוואת גבהים בקונטיינרים של השדות */
+.acct-form .co-row {
+  align-items: flex-start !important;
+}
+.acct-form .co-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important;
+}
+
+.acct-form{
+  --label-gap: 0px;    /* רווח בין label לשדה שמתחתיו */
+  --field-gap: 3px;   /* רווח אחרי השדה עד הבא */
+  --col-gap: 1px;     /* רווח בין עמודות בשורה */
+}
+
+/* label – לרוב כולם אותו דבר */
+.acct-form .acct-label{
+  display:block;
+  margin: 0 0 var(--label-gap) 0 !important;
+  text-align:right;
+}
+
+/* ✅ מרווח אחיד לכל השדות — חוץ מ"רחוב" ו"הערות" */
+.acct-form .acct-input:not(.acct-input--street):not(.acct-input--notes),
+.acct-form textarea.acct-input:not(.acct-input--notes){
+  margin: 0 0 var(--field-gap) 0 !important;
+  box-sizing: border-box;
+}
+
+/* 🎯 חריגות: "רחוב" ו"הערות" – הגדירי מרווח משלך (או 0) */
+.acct-form .acct-input--street,
+.acct-form .acct-input--notes{
+  margin: 0 0 8px 0 !important;   /* שנהי לערך שתרצי, למשל 0 */
+}
+
+/* מצמצם את הרווח בדיוק בין הלייבל לתיבת ההערות */
+.acct-form .acct-label + .acct-input--notes {
+  margin-top: 0px !important;   /* משיכה קלה למעלה של ה-textarea */
+}
+
+/* מקטין גם את ה-margin התחתון של הלייבל כשהאח הבא הוא textarea ההערות */
+.acct-form .acct-label:has(+ .acct-input--notes) {
+  margin-bottom: -10px !important;
+}
+
+
+.acct-phone-sep{
+  top:20px;
+}
+
+/* רחוב: מצמצם רווח בין הלייבל לשדה */
+.acct-form .acct-label + .acct-input--street {
+  margin-top: -10px !important;   /* היה גדול יותר; כווני לפי הטעם */
+}
+ /* ===== רשימת משלוחים ===== */
+.ship-list{
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;                /* רווח בין אופציות */
+}
+
+.ship-item{ margin: 0; }
+
+.ship-radio{
+  display: grid;
+  grid-template-columns: 18px 1fr auto; /* רדיו | טקסט | מחיר */
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-border, rgba(0,0,0,.1));
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+/* מצב פריט פעיל */
+.ship-item.is-active .ship-radio{
+  border-color: #f8949c78;
+  box-shadow: 0 0 0 3px rgba(248,148,156,.18);
+}
+
+/* מצב נעול (חינם): מדגיש ועדין “אפורה” שאר האינפוטים */
+.ship-list.is-locked .ship-radio{
+  cursor: default;
+}
+.ship-radio.is-locked{
+  background: #fff6f7;            /* נגיעה ורודה עדינה */
+  border-color: #f8949c;
+  box-shadow: 0 0 0 3px rgba(248,148,156,.15);
+}
+
+/* ===== רדיו – בדומה לצ'קבוקס שהבאת ===== */
+.ship-radio input[type="radio"]{
+  appearance: none;
+  -webkit-appearance: none;
+  inline-size: 18px;
+  block-size: 18px;
+  margin: 0;
+  border: 2px solid #bbb;
+  border-radius: 4px;              /* מרובע כמו הצ'קבוקס שלך */
+  background: #fff;                /* לא מסומן: לבן */
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+/* מסומן: ורוד עם וי לבן במרכז (9x8) */
+.ship-radio input[type="radio"]:checked{
+  border-color: #f8949c;
+  background:
+    #f8949c
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 9'%3E%3Cpath d='M1 5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat center / 9px 8px;
+}
+
+/* מצב disabled */
+.ship-radio input[type="radio"][disabled]{
+  cursor: not-allowed;
+  opacity: .7;
+  border-color: #ddd;
+}
+.ship-radio input[type="radio"][disabled]:checked{
+  /* נשאיר ורוד כדי להבהיר שנבחר/נעול, רק בהיר יותר */
+  background:
+    #fbc1c7
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 9'%3E%3Cpath d='M1 5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat center / 9px 8px;
+  border-color: #fbc1c7;
+}
+
+/* פוקוס נגיש */
+.ship-radio input[type="radio"]:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.35);
+}
+
+/* טקסטים */
+.ship-title{
+  font-size: 15px;
+  color: #222;
+  line-height: 1.2;
+}
+
+.ship-price{
+  font-weight: 700;
+  font-size: 14px;
+  color: #111;
+  margin-inline-start: 12px;
+}
+
+/* "FREE" בתור באדג' עדין */
+.ship-price:where(:is(:not(:empty))) {
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+.ship-price:where(:not(:empty)):has(> ._free){
+   color: #24cc27;
+  }
+
+/* הערת מצב חינם */
+.ship-note{
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+/* קוסמטיקה ל-RTL/LTR */
+[dir="rtl"] .ship-price { margin-inline-start: 12px; }
+[dir="ltr"] .ship-price { margin-inline-start: 12px; }
+
+.order-list.is-scroll {
+  max-height: 352px; /* 4 שורות * ~88px */
+  overflow-y: auto;
+  padding-inline-end: 6px; /* מקום לסקרולבר ב-RTL */
+}
+
+/* סגנון סרגל גלילה עדין */
+.order-list.is-scroll::-webkit-scrollbar { width: 6px; }
+.order-list.is-scroll::-webkit-scrollbar-track { background: transparent; }
+.order-list.is-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 6px; }
+.order-list.is-scroll { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.25) transparent; }
+
+/* במובייל אפשר להגביה מעט אם צריך */
+@media (max-width: 480px) {
+  .order-list.is-scroll { max-height: 300px; }
+}

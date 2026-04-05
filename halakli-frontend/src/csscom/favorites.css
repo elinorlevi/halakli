@@ -1,0 +1,258 @@
+/* ===== Layout ===== */
+.acct-two-cols {
+  display: flex;
+  flex-direction: row-reverse; /* RTL: סיידבר מימין */
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.acct-sidebar {
+  min-width: 300px;
+  max-width: 300px;
+  padding-inline-start: 0;
+}
+
+.acct-side-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-family: 'Lucida Sans','Lucida Sans Regular','Lucida Grande',
+               'Lucida Sans Unicode',Geneva,Verdana,sans-serif;
+  text-align: center;
+}
+
+.acct-side-sep {
+  align-self: stretch;
+  width: 1px;
+  background: #E6E6E6;
+}
+
+.acct-content { flex: 1; max-width: 960px; }
+.acct-error   { margin-bottom: 12px; }
+
+/* ===== Grid ===== */
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+/* ===== Card (תמונה למעלה, תוכן למטה) ===== */
+.fav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  padding: 12px;
+}
+
+.fav-media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.fav-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
+}
+
+/* לב להסרה בפינה העליונה */
+.fav-heart {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: #e33;
+  cursor: pointer;
+  transition: transform .06s ease, color .2s ease;
+}
+.fav-heart:active { transform: translateY(1px); }
+
+.fav-heart:not(.is-active) {
+  color: #666;
+  background: transparent;
+}
+
+/* גוף הכרטיס */
+.fav-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fav-title {
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 0;
+  color: #222;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fav-price {
+  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fav-price .old {
+  text-decoration: line-through;
+  opacity: .6;
+  margin-inline-end: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fav-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+.fav-actions .acct-btn { flex: 1 1 auto; }
+
+.fav-note { color: #888; }
+
+@media (max-width: 520px) {
+  .fav-media { aspect-ratio: 1 / 1; }
+}
+
+.fav-heart:not(.is-active):hover {
+  border-color: #9e9e9e;
+  color: #444;
+}
+
+.fav-heart:not(.is-active) svg path {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+/* כפתור מרובע, שקפקף */
+.acct-btn1.btn-ghost-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  height: 44px;
+  padding: 0 16px;
+  border: 2px solid #f8949c;
+  background: #f8949c00;
+  color: #f8949c;
+  font-weight: 600;
+  letter-spacing: .2px;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background .2s ease, box-shadow .2s ease, transform .06s ease;
+}
+
+.acct-btn1.btn-ghost-square:hover {
+  transform: scale(1.035);
+}
+
+.acct-btn1.btn-ghost-square:active {
+  transform: translateY(1px);
+}
+
+.acct-btn1.btn-ghost-square:focus-visible {
+  outline: 2px dashed #000;
+  outline-offset: 3px;
+}
+
+.acct-btn1.btn-ghost-square:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* ===== חץ פתיחה/סגירה של הסיידבר ===== */
+.acct-side-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.acct-side-title{
+  font-weight: 600;
+  text-align: center;
+  font-family: 'Lucida Sans','Lucida Sans Regular','Lucida Grande',
+               'Lucida Sans Unicode',Geneva,Verdana,sans-serif;
+}
+
+/* חץ בסיסי – ברירת מחדל: מוסתר בדסקטופ */
+.acct-side-toggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 999px;
+  color: #555;
+  transition: background .15s ease, color .15s ease, transform .08s ease;
+  display: none; /* <-- מוסתר בדסקטופ */
+}
+
+.acct-side-toggle:hover {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.acct-side-toggle--floating {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* הצגה במובייל בלבד */
+@media (max-width: 768px) {
+  .acct-side-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .acct-side-toggle--floating {
+    top: 4px;
+    inset-inline-end: 4px;
+  }
+
+  /* אופציונלי: לגרום לסיידבר להיות אוברליי במובייל */
+  .acct-sidebar {
+    background: #fff;
+    z-index: 10;
+  }
+}
+
+@media (max-width: 520px) {
+  .fav-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px; /* אפשר להשאיר 14 אם בא לך יותר רווח */
+  }
+
+  .fav-media {
+    aspect-ratio: 1 / 1; /* שיהיו ריבועיות ויפות */
+  }
+}

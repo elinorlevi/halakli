@@ -1,0 +1,1052 @@
+
+.acct-breadcrumb{
+  font-size:18px;
+  color:#000000;
+  display:flex;
+  width:100%;
+  justify-content:center;  
+  margin:0 0 50px;   
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;        
+}
+
+.acct-breadcrumb ol{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  list-style:none;            /* מבטל מספור 1. 2. */
+  padding:0;
+  margin:0;
+}
+.acct-breadcrumb li{
+  display:flex;
+  align-items:center;
+}
+.acct-breadcrumb li + li::before{
+  content:"›";                /* החץ */
+  margin:0 8px;
+  color:#000000;
+}
+.acct-breadcrumb a{
+  color:#0b0b0b;
+  text-decoration:none;
+}
+
+
+.acct-breadcrumb a:hover{
+  color: #f8949c;             /* ורוד בהובר */
+}
+
+.acct-wrap{
+     max-width: 900px;
+      margin: 0 auto; 
+      padding: 180px 16px 190px;
+     }
+
+
+.acct-section{ 
+    margin-top: -80px;
+ }
+
+.acct-h1{
+  font-size: clamp(22px, 3.4vw, 40px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 8px 0 10px;
+}
+
+.acct-sub{
+  text-align: center;
+  color: #666;
+  margin: 0 0 22px;
+   font-size: 17px;   
+}
+
+/* עטיפה עם אייקון פנימי */
+.acct-field { position: relative; }
+
+/* מקום לעין בקצה */
+.acct-input--password{
+  padding-inline-end: 42px;   /* שלא יעלה על הטקסט */
+  
+}
+
+/* יישור וטיפוגרפיה לימין רק לשדות עם הקלאס */
+.acct-input--rtl{
+  direction: rtl;           /* caret ותווים מתחילים מימין */
+  text-align: right;        /* יישור הטקסט */
+  text-indent: 0;           /* מבטל את ה-indent הכללי שלך */
+  box-sizing: border-box;   /* שלא יגדיל את המלבּן */
+  padding-inline-end: 10px; /* ריווח פנימי מימין */
+}
+
+/* הכפתור עצמו – שחור, בלי רקע */
+.acct-eye{
+  position: absolute;
+  inset-inline-end: 10px;     /* end: ימין ב-LTR, שמאל ב-RTL */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border: 0; background: transparent;
+  color: #111;                /* שחור כמו בתמונה */
+  cursor: pointer;
+  padding: 0;
+  transition: color .2s ease, transform .15s ease;
+}
+.acct-eye:hover{ transform: translateY(-50%) scale(1.06); }
+
+/* החלפה בין האייקונים */
+.acct-eye .eye-on{ display: none; }
+.acct-eye[aria-pressed="true"] .eye-off{ display: none; }
+.acct-eye[aria-pressed="true"] .eye-on{ display: block; }
+
+
+.acct-form{ max-width: 400px;
+  margin: 0 auto; 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;        
+  display: grid;
+   gap: 10px;
+    direction: ltr;
+   }
+
+.acct-label{
+     font-size: 12px; 
+    letter-spacing: .12em; 
+    text-transform: uppercase; 
+    color:#444; 
+    direction: rtl;
+    
+}
+
+.acct-input{
+  width: 100%;
+   border:1px solid #ddd;
+    border-radius:6px;
+  padding:12px 1px; 
+  font-size:16px;
+  text-indent:10px;  
+  background: #ffffff;
+}
+
+
+.acct-input:focus{
+     outline:2px solid #111;
+      border-color:#111; 
+}
+
+.acct-btn{
+  margin-top: 6px;
+  height: 40px;
+  margin-bottom: 50px;
+  border-radius: 0;
+  border: 2px solid #111;      /* מסגרת שתישאר גם כשהרקע נהיה לבן */
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: .1em;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.acct-btn:disabled{
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* hover / focus רק כשהכפתור פעיל */
+.acct-btn:not(:disabled):hover,
+.acct-btn:not(:disabled):focus-visible{
+  background: #f8949c;          /* רקע לבן */
+       border:1px solid #ffc9c9;
+
+}
+
+.acct-error,
+.acct-error-inline{
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  color: #d32f2f;           /* אדום ברור */
+  line-height: 1.2;
+  direction: rtl;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+ .acct-form:has(.acct-error) .acct-input{
+  border-color:#e03131;
+  color:#b00000;
+  caret-color:#e03131;
+}
+.acct-form:has(.acct-error) .acct-label{ color:#b00000; }
+
+.acct-sep{ margin: 28px 0; border: 0; border-top: 1px solid #111; }
+
+.acct-mini-title{
+  text-align:center; 
+  letter-spacing:.18em; 
+  font-size:19px; 
+  margin: 0 0 19px; 
+  text-transform:uppercase;
+  margin-top: 50px;
+}
+.acct-benefits-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;   /* ממקם את התאים עצמם במרכז */
+  align-items: start;
+  gap: 30px;
+  list-style: none;
+  margin: 30px auto;
+  padding: 0;
+  max-width: 900px;        /* אופציונלי – שלא יימתח מדי */
+  margin-bottom: 100px;
+}
+
+.acct-benefits-grid strong{
+     display:block;
+      font-size:12px;
+       letter-spacing:.1em;
+        text-transform:uppercase;
+         margin-bottom:6px;
+         text-align: center;
+         font-size: clamp(16px, 1.8vw, 2px); /* גדול יותר ורספונסיבי */
+ }
+.acct-benefits-grid p{ margin:0; color:#666; font-size:14px; text-align: center; }
+
+.acct-back{
+  appearance:none; 
+  background:transparent;
+  border:0; color:#111;
+  cursor:pointer;
+  margin: 0 150px 90px; 
+  margin-bottom:8px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;        
+  font-size: 17px;
+}
+
+.acct-back:hover,
+.acct-back:focus-visible{
+  color:#f8949c;
+}
+
+.acct-rules{ 
+    list-style: none;
+     padding: 0 0 4px;
+      margin: 4px 0 0;
+       color:#777;
+        font-size:13px; 
+        direction: rtl;
+        
+    }
+
+.acct-rules li.ok{ color: #0c7b21; }
+
+/* שורת טלפון: שני שדות + מפריד */
+.acct-phone{
+  display: grid;
+  grid-template-columns: 88px 12px 280px; /* 3 ספרות | מפריד | 7 ספרות */
+  align-items: center;
+  gap: 8px;
+  max-width: 280px;           /* שלא יתפרס על כל הרוחב */
+}
+.acct-phone .acct-input{
+  width: 100%;
+  text-align: left;         /* מספרים ממורכזים ונוחים להקלדה */
+  text-indent: 10;
+  direction: ltr;
+}
+.acct-phone-sep{
+  color:#888;
+  user-select: none;
+  font-weight: 600;
+}
+
+.acct-consents{
+  margin-top: 10px;
+  display: grid;
+  gap: 14px;
+}
+
+.acct-check{
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 10px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.acct-link{
+direction: rtl;
+color:#f8949c ;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;        
+
+}
+
+/* צ'קבוקס: לבן כשלא מסומן, ורוד עם וי לבן כשמסומן */
+.acct-check input[type="checkbox"]{
+  appearance: none;
+  -webkit-appearance: none;
+  inline-size: 14px;
+  block-size: 13px;          /* המידות שלך */
+  margin-top: 4px;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  background: #fff;          /* לא מסומן: לבן ונקי */
+  cursor: pointer;
+}
+
+.acct-check input[type="checkbox"]:checked{
+  border-color:#f8949c;
+  /* ורוד + וי לבן במרכז, בגודל 9x8 */
+  background:
+    #f8949c
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 9'%3E%3Cpath d='M1 5l3 3 7-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat center / 9px 8px;
+}
+
+.acct-success{
+ text-align: center;
+color:#666
+}
+
+.acct-success::before{
+  content: "✓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acct-check a{ color:#f8949c;
+   text-decoration: underline; }
+.acct-check a:hover{ color:#f8949c; }
+
+
+.acct-select select{
+  width:100%;
+   padding:12px 14px;
+    border:1px solid #ddd;
+     border-radius:6px;
+      background:#943f3f;
+       font-size:16px;
+}
+.acct-select.invalid select{ border-color:#e66; }
+
+.acct-dob{ 
+    display:grid;
+     grid-template-columns: repeat(3, 1fr);
+      gap:10px; 
+    }
+
+@media (max-width: 640px){
+  .acct-benefits-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* עטיפת הטופ־בר */
+.topbar{
+  position: fixed;
+  inset: 0 0 auto 0;     /* top:0; left:0; right:0 */
+  height: 80px;
+  z-index: 1000;
+  pointer-events: none;  /* הבר עצמו לא תופס קליקים; האייקונים כן */
+}
+
+/* פס עליון פנימי (במקום body::before) – סטטי */
+.topbar--static .topbar__bar{
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border-bottom: 2px solid #f8949c0f;
+  box-shadow: 0 4px 40px #f8949c1b;
+  transition: none;      /* בלי אנימציות */
+  pointer-events: none;
+}
+
+/* לוגו טופ־בר (לא ההירו) */
+.topbar__logo{
+  position: fixed;
+  left: 50%;
+  top: 36px;
+  transform: translate(-50%, -50%) scale(.9);
+  height: clamp(70px, 3vw, 200px);
+  z-index: 1003;         /* מעל הפס */
+  pointer-events: none;
+  transition: none !important;   /* סטטי */
+}
+
+/* מיקום האייקונים */
+:root{ --menu-right: 40px; --menu-gap: 12px; }
+@media (min-width:1200px){ :root{ --menu-right: 280px; --menu-gap: 14px; } }
+
+/* ===== פרמטרים ===== */
+:root{
+  --topbar-h: 80px;
+  --menu-right: clamp(16px, 3.2vw, 40px);
+  --menu-gap: clamp(14px, 2.8vw, 24px);
+}
+
+/* פס עליון פנימי (במקום body::before) */
+.account-topbar{
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--topbar-h);
+  z-index: 1000;
+  pointer-events: none;
+}
+.account-topbar__bar{
+  position: absolute;
+  inset: 0;
+  background:#fff;
+  border-bottom: 2px solid #f8949c0f;
+  box-shadow: 0 4px 40px #f8949c1b;
+  pointer-events: none;
+}
+
+/* לוגו – מרכז מסך, מיושר אנכית לפס */
+.account-topbar__logo{
+  position: fixed;
+  left: 50%;
+  top: calc(env(safe-area-inset-top, 0px) + var(--topbar-h) / 2);
+  transform: translate(-50%, -50%);
+  height: clamp(32px, 8vw, 56px);
+  z-index: 1003;
+  pointer-events: none;
+}
+
+/* ===== סרגל האייקונים מימין (Cart, User, Hamburger+MENU) ===== */
+.account-topbar__icons{
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  right: var(--menu-right);
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--menu-gap);
+  z-index: 1004;
+  pointer-events: auto;
+
+}
+
+
+/* איקונים */
+.account-icon{
+  color: #000;
+  font-size: clamp(20px, 2.2vw, 25px);
+  cursor: pointer;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+  transition: none;
+}
+
+/* ===== המבורגר עם טקסט MENU לימינו – בלי לשנות JSX ===== */
+/* הופכים את הקומפוננטה לגריד: 2 עמודות – אייקון (3 קווים אחד מעל השני) + טקסט */
+.account-hamburger{
+  display: grid;
+  grid-template-columns: auto auto;    /* [קווים][MENU] */
+  grid-auto-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+  padding: 12px 89px;
+  transform: none;                      /* יותר נקי */
+}
+
+.account-icon--cart {
+  font-size: 1.5rem; 
+  transform: translate(78px, -0.3px);
+    font-size: 1.5rem;  
+   background: transparent !important;
+    border: none !important;
+}
+
+/* כשהתפריט פתוח – להפוך את האייקונים ללבנים */
+.menu-open .account-topbar__icons .account-icon,
+.menu-open .account-topbar__icons .account-icon i,
+.menu-open .account-topbar__icons,
+.menu-open .account-hamburger .account-menu__label {
+  color: #ffffff00 !important;
+  fill: #ffffff00 !important;
+  opacity: 1 !important;
+}
+
+
+
+/* טאבלט – עד 1200px: העגלה זזה קצת ימינה */
+@media (max-width: 1200px) {
+  .account-topbar__icons .account-icon--cart {
+    transform: translateX(24px) !important;
+     
+  }
+}
+
+/* מובייל – עד 768px: זזה עוד טיפה */
+@media (max-width: 768px) {
+  .account-topbar__icons .account-icon--cart {
+    transform: translateX(80px) !important;
+  }
+}
+
+.account-icon{
+  margin-right: 110px !important; 
+}
+
+.account-hamburger{
+  margin-inline-start: -165px;
+  margin-right: 10px;
+}
+
+
+/* שלושת הקווים תופסים את העמודה הראשונה (מוערמים אחד מתחת לשני) */
+.account-hamburger__line{
+  grid-column: 1;
+  height: 4px;
+  width: 31px;
+  background: #000;
+  margin: 3px 0;                        /* רווח אנכי בין הקווים */
+  transition: none;
+}
+
+/* הטקסט MENU נמצא בעמודה השנייה ומרוכז אנכית לצד הקווים */
+.account-menu__label{
+  grid-column: 2;
+  grid-row: 1 / span 3;                 /* מול שלושת הקווים */
+  align-self: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: .02em;
+  margin: 0;
+  transition: none;
+}
+
+/* (אופציונלי) אנימציית X כשההמבורגר active – נשמרת */
+.account-hamburger.active .account-hamburger__line:nth-child(1){
+  transform: rotate(45deg) translate(10px, 2px);
+}
+.account-hamburger.active .account-hamburger__line:nth-child(2){ opacity: 0; }
+.account-hamburger.active .account-hamburger__line:nth-child(3){
+  transform: rotate(-45deg) translate(11px, -4px);
+}
+
+
+/* נוחות מובייל: קצת מרווח כשמסך צר מאוד */
+@media (max-width: 420px){
+  :root{ --menu-right: 12px; --menu-gap: 12px; }
+}
+
+
+/* ===== Footer ===== */
+.site-footer{
+  background:#0a0a0a;
+  color:#bbb;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-block:48px 24px;
+  font-size:14px;
+  direction: rtl;
+  font-family: "Heebo","Rubik","Assistant","Noto Sans Hebrew",Arial,Helvetica,sans-serif;
+}
+.site-footer a{ color:#8c8484a7; text-decoration:none; }
+.site-footer a:hover{ color:#fff;  }
+
+.footer-inner{
+  max-width:1200px;
+  margin-inline:auto;
+  padding-inline:20px;
+  display:grid;
+  grid-template-columns: minmax(160px, 1fr) repeat(3, minmax(180px, 1fr));
+  gap:28px 40px;
+  align-items:start;
+}
+
+.footer-brand{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.footer-logo{
+  width:80px; height:auto; display:block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.4));
+   margin-inline-start: 15.5px;
+}
+.brand-tag{
+  color:#8a8a8a;
+  font-size:12px;
+  margin:0;
+}
+
+.footer-title{
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  margin:0 0 10px;
+  letter-spacing: 0.15em !important; 
+}
+.footer-list{ list-style:none; margin:0; padding:0; }
+.footer-list li{ margin:8px 0; }
+.footer-list.offices li{ margin:14px 0; }
+
+
+.footer-bottom{
+  max-width:1200px;
+  margin:28px auto 0;
+  padding-inline:20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:grid;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding-top:18px;
+  grid-auto-flow:column;
+  direction:ltr;
+}
+
+.copy{
+ margin:0; 
+ color:#adacac; 
+ font-size:16px; 
+  }
+
+.social{ list-style:none; display:flex; gap:14px; margin:0; padding:0; }
+.social a{
+  width:28px; height:28px; display:grid; place-items:center;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:4px;
+  color:#bdbdbd;
+  font-size:13px; line-height:1;
+}
+.social a:hover{
+  border-color:#fff;
+  color:#fff;
+}
+
+/* רספונסיביות */
+@media (max-width: 900px){
+  .footer-inner{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px){
+  .footer-inner{
+    grid-template-columns: 1fr;
+  }
+  .footer-brand{ order:-1; }
+  .footer-bottom{ flex-direction:column; align-items:flex-start; }
+}
+
+
+.footer-col :is(.location, .location + strong){
+  display:block;
+  text-align: center;
+  color:rgba(244, 241, 241, 0.622);
+   margin: -2px 0;
+}
+
+nav.footer-col[aria-label="Salon location"]{
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* מרכז אופקית */
+  text-align: center;       /* טקסט באמצע */
+}
+
+.map-embed{
+  margin-right: 1060px;
+margin-top: -90px;
+}
+
+.map-embed iframe{
+  display: block;
+  width: 70%;
+  height: 150px;
+  border: 0;
+  border-radius: 8px;
+}
+
+/* טאבלט ומטה – מבטלים את הדחיפות והשלילה, וממרכזים */
+@media (max-width: 1200px){
+  .map-embed{
+    margin: 16px auto 0 !important;   /* מבטל margin-right/ top השליליים ומרכז */
+    padding: 0 20px;                   /* מרווח צדדים קטן */
+  }
+  .map-embed iframe{
+    width: 90%;                        /* מעט צר כדי לתת אוויר */
+    height: 200px;
+  }
+}
+
+/* מובייל – רוחב מלא, גובה קומפקטי */
+@media (max-width: 768px){
+  .map-embed{
+    margin: 14px auto 0 !important;
+    padding: 0 14px;
+  }
+  .map-embed iframe{
+    width: 100%;
+    height: 180px;
+  }
+}
+
+/* 1) בזמן תפריט פתוח – הרם את הטופ־בר מעל הטשטוש,
+      אבל בטל את הפס העליון (שלא "יקפוץ" מעל האוברליי) */
+body.menu-open .topbar{
+  z-index: 2147483000 !important;      /* מעל ה-overlay */
+}
+body.menu-open .topbar__bar{
+  background: transparent !important;  /* לא רואים את הפס */
+  border: 0 !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;     /* שלא יחסום קליקים */
+}
+
+/* 2) האייקונים נראים בלבן מעל הטשטוש, אבל לא קליקים (כדי לא להפריע למגירה) */
+body.menu-open .account-topbar__icons{
+  z-index: 2147483001 !important;
+}
+body.menu-open .account-icon{
+  color: rgba(0,0,0,.25) !important;
+  opacity: 1 !important;
+  pointer-events: none;                 /* לא לוחיצים בזמן פתוח */
+}
+
+/* 3) רק כפתור ההמבורגר (X) נשאר קליקבילי ומעל כולם */
+body.menu-open .account-hamburger{
+  z-index: 2147483002 !important;
+  pointer-events: auto;                /* כן לוחיץ */
+  
+}
+body.menu-open .account-hamburger__line{
+  background: #fff !important;         /* X לבן */
+}
+
+/* מסתיר את לוגו הטופ־בר בזמן תפריט פתוח */
+body.menu-open .topbar__logo{
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -1 !important; /* ליתר ביטחון שלא יישב מעל שכבות */
+}
+
+body.menu-open .account-menu__label{
+  color: rgba(0,0,0,.25) !important;
+}
+
+/* ===== 1) המבורגר → X: מעבר חלק ===== */
+.account-hamburger__line{
+  /* הוספת מעבר חלק על הטרנספורמים/אופסיטי/צבע */
+  transition:
+    transform .28s cubic-bezier(.2,.7,.2,1),
+    opacity   .22s ease,
+    background-color .2s ease;
+}
+
+/* כבר יש לך טרנספורמים במצב .active – המעבר עכשיו יהיה חלק */
+
+/* ===== 2) “קליק” עדין בכפתור ===== */
+.account-hamburger{
+  transition: transform .18s ease;
+}
+.account-hamburger:active{
+  transform: scale(.96);
+}
+
+/* ===== 3) סטאגר לפריטי התפריט הצדדי בזמן פתיחה ===== */
+@keyframes drawerItemIn{
+  from{ opacity: 0; transform: translateX(8px); }
+  to  { opacity: 1; transform: translateX(0); }
+}
+
+.menu-drawer.open .drawer-nav li{
+  opacity: 0;              /* מצב התחלתי */
+  animation: drawerItemIn .32s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+/* דיליי מדורג – עד 10 פריטים (תוכלי להרחיב אם צריך) */
+.menu-drawer.open .drawer-nav li:nth-child(1) { animation-delay: .02s; }
+.menu-drawer.open .drawer-nav li:nth-child(2) { animation-delay: .05s; }
+.menu-drawer.open .drawer-nav li:nth-child(3) { animation-delay: .08s; }
+.menu-drawer.open .drawer-nav li:nth-child(4) { animation-delay: .11s; }
+.menu-drawer.open .drawer-nav li:nth-child(5) { animation-delay: .14s; }
+.menu-drawer.open .drawer-nav li:nth-child(6) { animation-delay: .17s; }
+.menu-drawer.open .drawer-nav li:nth-child(7) { animation-delay: .20s; }
+.menu-drawer.open .drawer-nav li:nth-child(8) { animation-delay: .23s; }
+.menu-drawer.open .drawer-nav li:nth-child(9) { animation-delay: .26s; }
+.menu-drawer.open .drawer-nav li:nth-child(10){ animation-delay:.29s; }
+
+/* רק התוכן (הקווים/הטקסט) יהיה לחיץ; הרקע שסביבם לא ילחיץ */
+.account-hamburger{
+  pointer-events: none; /* העטיפה עצמה לא תופסת קליקים */
+}
+
+/* שלושת הקווים והטקסט MENU מחזירים קליק ומראים יד */
+.account-hamburger__line,
+.account-menu__label{
+  pointer-events: auto; 
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+
+.acct-row-3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; }
+@media (max-width:700px){ .acct-row-3{ grid-template-columns:1fr; } }
+/* כפתור אדמין במצב ACCOUNT – ממורכז כמו הלוגו */
+
+.admin-back-btn--account {
+  position: fixed;
+  top: 39px;               /* אותו גובה כמו .topbar__logo אצלך */
+  left: 74%;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+  z-index: 1005;           /* מעל הפס והלוגו */
+  background: #00000000;        /* כמו כפתור/אייקון account */
+  border: 1px solid rgba(255, 255, 255, 0);
+  color: #000000;
+}
+
+/* במובייל – שיהיה עדיין באמצע אבל קצת יותר קטן */
+@media (max-width: 540px) {
+  .admin-back-btn--account {
+    top: 38px;
+    padding: 6px 12px;
+  }
+}
+
+
+/* כשאני באדמין – להזיז פחות/שמאלה, עם סלקטור חזק */
+body.admin-view .account-icon--cart,
+body.admin-view .account-topbar__icons .account-icon--cart,
+body.admin-view .account-icon--cart.account-icon--cart-admin {
+  transform: translateX(-70px) !important; /* או 0 */
+}
+
+
+/* כפתור אדמין ב-HOME – בתוך סרגל האייקונים, כמו שאר האייקונים */
+.admin-back-btn--home {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: #000;
+  font-size: clamp(20px, 2.2vw, 25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* במובייל – טיפה קטן */
+@media (max-width: 540px) {
+  .admin-back-btn--home {
+    font-size: 20px;
+  }
+}
+
+/* ===== ACCOUNT – לוגו במובייל ===== */
+
+/* להקטין קצת במסכים בינוניים */
+@media (max-width: 900px) {
+  .topbar.topbar--static .topbar__logo {
+    max-width: 200px;
+    height: auto;
+  }
+}
+
+/* במסכים קטנים מאוד – עוד יותר קטן */
+@media (max-width: 600px) {
+  .topbar.topbar--static .topbar__logo {
+    max-width: 180px;
+  }
+}
+
+/* במובייל – להזיז לשמאל ולכווץ כמו ב-HOME */
+@media (max-width: 768px) {
+  .topbar.topbar--static .topbar__logo {
+    position: fixed;
+    top: 40px;
+    left: 18px;
+    transform: translate(0, -50%) scale(0.9);
+  }
+}
+
+@media (max-width: 768px) {
+  body.is-account-page .topbar.topbar--static .account-topbar__icons .account-icon--cart {
+    transform: none !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .menu-drawer__overlay,
+  .menu-overlay {
+    background: #ffffff !important;
+  }
+}
+
+/* במובייל, כשהתפריט פתוח – האייקונים והטקסט MENU יהיו לבנים */
+@media (max-width: 768px) {
+  body.menu-open .account-icon {
+    color: #fff !important;            /* אייקונים לבנים */
+  }
+
+  body.menu-open .account-menu__label {
+    color: #fff !important;            /* גם המילה MENU לבנה */
+  }
+}
+
+/* ===== מובייל בלבד – לסדר את האייקונים בצד ימין רק בעמוד ACCOUNT ===== */
+@media (max-width: 768px) {
+
+  /* רק אם בעמוד יש .acct-wrap (כלומר עמוד ACCOUNT) */
+  body:has(.acct-wrap) .account-topbar__icons {
+    position: fixed;
+    top: env(safe-area-inset-top, 0px);
+    right: 8px;
+    left: auto;
+    height: var(--topbar-h);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0;
+    padding-right: 0;
+  }
+
+  /* מוחק את כל ה-margin/translate המוזרים – רק ב־ACCOUNT במובייל */
+  body:has(.acct-wrap) .account-topbar__icons .account-icon,
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--cart,
+  body:has(.acct-wrap) .account-topbar__icons .account-hamburger {
+    margin: 0 !important;
+    transform: none !important;
+    padding: 0 !important;
+  }
+
+  /* רווח קטן מהקצה לעגלה */
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--cart {
+    margin-right: 10px !important;
+  }
+
+  /* רווח בין העגלה להמבורגר */
+  body:has(.acct-wrap) .account-topbar__icons .account-hamburger {
+    margin-left: 26px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-topbar__icons .icon-cart,
+  .topbar .icon-cart {
+    transform: none !important;
+  }
+}
+
+/* ===== אחידות גודל לעגלת קניות במובייל בלבד ===== */
+@media (max-width: 768px) {
+
+  /* במקרה שהגודל נשלט על ה-SVG הפנימי */
+  .account-topbar__icons .account-icon--cart svg {
+    width: 1.6rem !important;
+    height: 1.6rem !important;
+    font-size: 1.6rem !important;
+  }
+}
+
+
+/* רק במובייל, ורק בעמוד שיש בו .acct-wrap – להזיז את ה-CART שמאלה */
+@media (max-width: 768px) {
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--cart {
+    margin-right: 24px !important;  /* תעלי/תרדי לפי מה שנוח בעין */
+    transform: none !important;     /* מבטל translateX ישן אם יש */
+  }
+}
+
+/* רק במובייל, כשהתפריט פתוח – להסתיר את העיגול עם המספר של העגלה */
+@media (max-width: 768px){
+  body.menu-open .account-icon--cart .cart-badge{
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* בכל המסכים, כשהתפריט פתוח – להסתיר את העיגול עם המספר של העגלה */
+body.menu-open .account-icon--cart .cart-badge{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* מובייל – לסדר את הגובה של ה־H1 בעמודי ACCOUNT */
+@media (max-width: 768px){
+  .acct-section{
+    margin-top: 0;     /* מבטל את ה- -80px רק במובייל */
+  }
+}
+
+
+/* מובייל – ליישר את הבאדג' (1) על אייקון העגלה בעמוד ACCOUNT */
+@media (max-width: 768px){
+  /* האייקון של העגלה יהיה רפרנס למיקום הבאדג' */
+  body:has(.acct-wrap) .account-icon--cart{
+    position: relative;
+  }
+
+  /* הבאדג' עצמו – יושב על האייקון מצד שמאל למעלה */
+  body:has(.acct-wrap) .account-icon--cart .cart-badge{
+    position: absolute;
+    top: -10px;         /* לשחק עם המספר אם צריך יותר גבוה/נמוך */
+    left: -9px;        /* לשחק אם צריך יותר פנימה/החוצה */
+    transform: none !important;
+  }
+}
+
+/* מובייל ACCOUNT – להצמיד CART + USER יותר ימינה */
+@media (max-width: 768px) {
+
+  /* עטיפת האייקונים – צמודה ממש לימין */
+  body:has(.acct-wrap) .account-topbar__icons {
+    right: 4px;                    /* פחות פיקסלים = יותר קרוב לקצה */
+    justify-content: flex-end;
+    gap: 0;
+    padding-right: 0;
+  }
+
+  /* לנקות מרווחים קודמים */
+  body:has(.acct-wrap) .account-topbar__icons .account-icon,
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--cart,
+  body:has(.acct-wrap) .account-topbar__icons .account-hamburger {
+    margin: 0 !important;
+    transform: none !important;
+    padding: 0 !important;
+  }
+
+  /* רווח קטן בין ההמבורגר לשאר (MENU | USER | CART) */
+  body:has(.acct-wrap) .account-topbar__icons .account-hamburger {
+    margin-left: 30px !important;  /* היה 26px – עכשיו הכל זז ימינה */
+  }
+
+  /* רווח ממש קטן בין CART ל-USER */
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--cart {
+    margin-right: 10px !important;
+  }
+
+  /* לוודא ש-USER / usermenu בלי מרווחים מיותרים */
+  body:has(.acct-wrap) .account-topbar__icons .account-icon--user,
+  body:has(.acct-wrap) .account-topbar__icons .usermenu {
+    margin-right: 0 !important;
+  }
+}
+
+/* מובייל – כשהתפריט פתוח להסתיר גם את אייקון ACCOUNT הרגיל */
+@media (max-width: 768px){
+  /* משתמש מחובר – התפריט שאנחנו כבר מסתירים */
+  body.menu-open .account-topbar__icons .usermenu{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* משתמש לא מחובר – האייקון העגול הרגיל */
+  body.menu-open .account-topbar__icons .account-icon--user{
+    opacity: 0;
+    pointer-events: none;
+  }
+}

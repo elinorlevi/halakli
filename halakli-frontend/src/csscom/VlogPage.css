@@ -1,0 +1,956 @@
+/* ================================
+   VlogPage • Polish (Halakli style)
+   ================================ */
+
+/* ——— Theme tokens ——— */
+:root {
+  --vp-bg-soft: #f6f7f8;
+  --vp-surface: #ffffff;
+  --vp-text: #202124;
+  --vp-text-dim: #616161;
+  --vp-border: rgba(0,0,0,.08);
+  --vp-shadow: 0 6px 18px rgba(0,0,0,.07);
+  --vp-accent: #f8949c;            /* הורוד של Halakli */
+  --vp-accent-ink: #b95860; 
+}
+:root { --header-height: 80px; } 
+/* שומר על רוחב נוח לקריאה */
+
+
+/* ===== HERO מקומי עם רקע מה-cover ===== */
+.vlog-hero{
+  position: relative;
+  overflow: hidden;
+  margin: 10px 0 18px;
+  padding: clamp(18px, 4vw, 48px) clamp(14px, 3.5vw, 36px);
+  background: #ffffff;           /* גיבוי אם אין תמונה */
+  isolation: isolate;
+  margin: 0;  
+  z-index: 1; 
+  height: 400px;                       /* אין רווחים */
+  border-radius: 0;
+  height: 300px;
+    margin-top: calc(-1.3 * var(--header-height));      /* חודר מתחת להאדר */
+  padding-top: calc( clamp(18px,4vw,48px) + var(--header-height) ); /* מפצה על התוכן */
+  border-radius: 0;
+}
+
+.vlog-hero::before{
+  content:"";
+  position: absolute;
+  inset: 0;
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(3.5px) saturate(1.05);
+  transform: scale(1.06);
+  z-index: -2;
+}
+.vlog-hero::after{
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.45));
+  z-index: -1;
+}
+
+
+/* פירורי לחם על HERO: בהיר כדי להיראות על הרקע */
+.acct-breadcrumb--on-hero{ color: #f1f3f5; margin-top: 100px;}
+.acct-breadcrumb--on-hero a{ color:#fff; }
+.acct-breadcrumb--on-hero li+li::before{ color:#fff; opacity:.6; }
+
+/* ===== כותרת ===== */
+.vlogpage-title {
+  font-size: clamp(32px, 6vw, 80px);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: .01em;
+  margin: 7px auto 2px;  /* מרכז + ריווח נעים */
+  color: var(--vp-text);
+  text-align: center;
+}
+
+
+
+/* ===== אפקט Masked Background לתואר ===== */
+.vlogpage-title--masked{
+  --vp-mask-img: none;           /* מוזן inline מה-React */
+  color: transparent;
+  background-image: var(--vp-mask-img);
+  background-size: 100% auto;    /* סטטי, ללא הזזה */
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* חדות קלה סביב האותיות */
+  -webkit-text-stroke: 1px rgba(250,72,72,.15);
+
+  /* ללא אנימציה (ביטלתי כפילויות) */
+  animation: none;
+}
+
+/* מבטל את הקו עבור הכותרת עם האפקט */
+.vlogpage-title--masked::after { content: none; display: none; }
+
+/* אם אין תמיכה ב-background-clip:text – פולבק */
+@supports not((-webkit-background-clip:text) or (background-clip:text)) {
+  .vlogpage-title--masked{
+    color: var(--vp-text);
+    background-image: none;
+    -webkit-text-stroke: 0;
+    animation: none;
+  }
+}
+
+/* העדפת משתמש ללא אנימציות (שמירה) */
+@media (prefers-reduced-motion: reduce){
+  .vlogpage-title--masked{ animation: none; }
+}
+:root{
+  --content-w: 900px; /* שליטה על רוחב מקסימום של התיבה */
+}
+
+.vlogpage-meta {
+  border-radius: 14px;
+  padding: 40px 150px;
+  display: flex;
+  flex-wrap: wrap;        /* מאפשר ירידה שורה במובייל */
+  align-items: center;
+  justify-content: center;/* מרכז אופקית */
+  gap: 17px;              /* ריווח אחיד בין כל הפריטים */
+  margin-top: 14px;
+  text-align: center;     /* מרכז טקסט פנימי */
+}
+
+.vlogpage-meta__left,
+.vlogpage-author {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* מרכז גם את קבוצת המחבר */
+  gap:8px;
+  margin-top: 7px;
+}
+.vlogpage-author > div {
+  text-align: right;             /* יישור הטקסט עצמו לימין */
+}
+.vlogpage-meta__right {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* מרכז את כפתורי השיתוף/סטטיסטיקות */
+  gap: 10px;
+ 
+}
+
+/* אין צורך בדיביידר כשמרכזים */ 
+.vlogpage-meta__divider { display: none; }
+
+.vlogpage-avatar {
+ width:44px; height:44px;
+  border-radius:50%;
+  display:block;
+  object-fit:cover; object-position:center;
+  /* ריכוך מיקרו – מוריד “חדות דיגיטלית” בלי לטשטש את הפנים */
+  filter: blur(.30px) contrast(.96) saturate(.96) brightness(.985);}
+
+.vlogpage-author__name { font-weight: 700; letter-spacing: .02em; }
+.vlogpage-date { font-size: 13px; color: var(--vp-text-dim); 
+ color: var(--vp-text-dim);
+  font-weight: 600;
+}
+
+.vlogpage-author__name,
+.vlogpage-author__role,
+.vlogpage-date{
+font-size: 13px; 
+color: #868686d1;
+font-weight: 600;
+}
+
+/* ===== Views pill (כמו הלייק) ===== */
+
+
+.hl-views__left{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:left;   /* יושב לשמאל */
+  flex-direction: row;           /* לא להתהפך ב-RTL */
+  gap: 8px;
+  padding-left: 12px;
+  padding-right: 26px;
+  text-align: left;              /* טקסט לשמאל */
+}
+
+
+/* אייקון וטקסט */
+.hl-views__icon{
+  width: 20px;
+  height: 29px;
+  fill: #8a8a8a;
+  transition: transform .15s ease;
+   transform: translateY(1px);  
+}
+
+.hl-views__text{
+  color: #fcfcfc;
+  font-size: 16px;
+     transform: translateY(-1px);  
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;              /* לוודא שמורגש בשמאל */
+}
+/* ההורה חייב להיות יחסית */
+.hl-views{
+  position: relative;
+  height: 48px;
+  width: 160px;
+  border-radius: 16px;
+  background: #1d1d1d;
+  overflow: hidden;
+}
+
+/* צד ימין: מונה עם קו מפריד — תמיד ימין */
+.hl-views__count{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;         /* תמיד ימין */
+  left: auto;       /* למנוע היפוכים ב-RTL */
+  width: 36%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transform: translateY(1.5px);  
+  color: #cfcfcf;
+ --divider-offset: 18px;          /* כמה להזיז מהשפה פנימה */
+  --divider-height-inset: -7px;     /* מרחק מלמעלה/למטה */
+  --divider-w: 1.5px;
+  --divider-color: #4e4e4e;
+  background:
+    linear-gradient(90deg, var(--divider-color), var(--divider-color)) no-repeat;
+  /* גובה הקו (פחות אינסט מלמעלה/למטה) */
+  background-size: var(--divider-w) calc(100% - 2*var(--divider-height-inset));
+
+  /* מיקום הקו: X = ההיסט פנימה, Y = מרכז אנכי */
+  background-position: var(--divider-offset) calc(50%);
+
+  /* אם צריך ריווח טקסט אחרי הקו */
+  padding-left: calc(var(--divider-offset) + -5px);}
+
+
+
+/* Toggle חבוי */
+.hl-like__toggle{ display:none; }
+
+/* מעטפת הכפתור */
+.hl-like{
+  position:relative;
+  display:flex;
+  height:48px;
+  width:160px;
+  border-radius:16px;
+  background: #1d1d1d; /* אפשר להחליף ל-var(--vp-text) וכו' */
+  overflow:hidden;
+
+}
+
+/* אזור הלחיץ: הלב והטקסט בצד שמאל */
+.hl-like__click{
+  width: 80%;               /* משאיר 30% למונה מימין */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;   /* לשמאל */
+  gap: 8px;                      /* רווח קטן בין הלב לטקסט */
+  padding-inline-start: 12px;    /* ריווח פנימי משמאל */
+  padding-inline-end: 8px;
+}
+
+/* אייקון – מתאים לגובה הטקסט */
+.hl-like__icon{
+  width: 20px;
+  height: 20px;
+  fill: #505050;
+  transition: fill .2s ease, transform .2s ease;
+}
+.hl-like__click:hover .hl-like__icon{
+  transform: scale(1.08);   /* ממש בקטנה */
+}
+
+
+/* מונה בצד ימין (ללא כפילות כללים) */
+.hl-like__count{
+  position: absolute;
+  right: 0;                      /* נשאר בצד ימין */
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #717070;
+  border-left: 2px solid #4e4e4e;
+  transition: transform .5s ease-out, color .5s ease-out;
+}
+.hl-like__count.two{ transform: translateY(40px); }
+
+/* מצב liked (כמו שהיה) */
+.hl-like__toggle{ display:none; }
+.hl-like__toggle:checked ~ .hl-like__click .hl-like__icon{
+  fill:#fc4e4e;
+  animation: hl-like-pop .2s ease-out 1;
+}
+.hl-like__toggle:checked ~ .hl-like__count.two{
+  transform: translateY(0);
+  color:#fcfcfc;
+}
+.hl-like__toggle:checked ~ .hl-like__count.one{
+  transform: translateY(-40px);
+}
+
+@keyframes hl-like-pop{
+  0%{ transform:scale(.5); }
+  100%{ transform:scale(1.2); }
+}
+
+
+/* אם אתה ב-RTL ורוצה שהלב יופיע מימין לטקסט: */
+[dir="rtl"] .hl-like__click{ flex-direction: row-reverse; }
+
+
+/* טקסט */
+.hl-like__text{
+  color:#fcfcfc;
+  font-size:16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* מונה */
+.hl-like__count{
+  position:absolute;
+  right:0;                 /* אם תרצה RTL מוחלט: החלף ל-left:0 */
+  width:32%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  color:#717070;
+  border-left:2px solid #4e4e4e;
+}
+
+/* מיקום ראשוני לשכבת האנימציה */
+.hl-like__count.two{ transform: translateY(40px); }
+
+/* מצב liked (ה־checkbox מסומן) */
+.hl-like__toggle:checked ~ .hl-like__click .hl-like__icon{
+  fill:#fc4e4e;
+  animation: hl-like-pop .2s ease-out 1;
+}
+.hl-like__toggle:checked ~ .hl-like__count.two{
+  transform: translateX(0);  /* נכנס למקום */
+  color:#fcfcfc;
+}
+.hl-like__toggle:checked ~ .hl-like__count.one{
+  transform: translateY(-40px); /* יוצא למעלה */
+}
+
+@keyframes hl-like-pop{
+  0%{ transform:scale(.5); }
+  100%{ transform:scale(1.2); }
+}
+/* Share tooltip icons (מבוסס Uiverse, מותאם ל-React ולנגישות) */
+.share-icons{
+  display:inline-flex;
+  list-style:none;
+  gap:15px;
+  margin:0;
+  padding:0;
+  margin-bottom: 1px;
+  align-items:center;
+}
+.share-block{
+  display:flex;
+  align-items:center;
+  gap:12px;                 /* מרווח בין הכיתוב לאייקונים */
+  direction: ltr;
+}
+
+.share-label{
+  white-space: nowrap; /* הכיתוב לא יישבר לשתי שורות */
+}
+
+.share-icons .icon{
+  position:relative;
+  background:#fff;
+  color:#222;
+  border-radius:50%;
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 10px rgba(0,0,0,.1);
+  transition:all .2s cubic-bezier(0.68,-0.55,0.265,1.55);
+  text-decoration:none;
+  border:1px solid var(--vp-border, rgba(0,0,0,.08));
+  outline:none;
+}
+.share-icons .icon svg{
+  position:relative;
+  z-index:1;
+  width:20px; height:20px;
+  fill:currentColor;
+}
+
+/* נגישות */
+.share-icons .icon:focus-visible{
+  box-shadow:0 0 0 3px rgba(59,130,246,.35);
+}
+
+/* === Tooltip עם משתנים לצבעים === */
+.share-icons .tooltip{
+  --tip-bg:#fff;
+  --tip-fg:#111;
+  position:absolute;
+  top:0;
+  font-size:12px;
+  background:var(--tip-bg);
+  color:var(--tip-fg);
+  padding:5px 8px;
+  border-radius:5px;
+  box-shadow:0 10px 10px rgba(0,0,0,.1);
+  opacity:0;
+  pointer-events:none;
+  transition:all .3s cubic-bezier(0.68,-0.55,0.265,1.55);
+  white-space:nowrap;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.share-icons .icon .tooltip::before{
+  content:"";
+  position:absolute;
+  width:8px; height:8px;
+  background:var(--tip-bg) ;
+  bottom:-3px; left:50%;
+  transform:translateX(-50%) rotate(45deg);
+}
+
+/* פותח tooltip */
+.share-icons .icon:hover .tooltip{
+  top:-38px;
+  opacity:1;
+  visibility:visible;
+}
+
+/* אפקט מרחף לכפתור */
+.share-icons .icon:hover{ transform:translateY(-1px); }
+
+/* ——— צבעי מותג לכפתורים ——— */
+.share-icons .facebook:hover{ background:#1877f2; color:#fff; }
+.share-icons .whatsapp:hover{ background:#25D366; color:#fff; }
+
+/* אינסטגרם: שכבת גרדיאנט */
+.share-icons .instagram::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(45deg,#f58529,#feda77,#dd2a7b,#8134af,#515bd4);
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.share-icons .instagram:hover::before{ opacity:1; }
+.share-icons .instagram:hover{
+  color:#fff;
+  box-shadow:0 10px 10px rgba(0,0,0,.12);
+}
+
+/* ——— צבעי tooltip לפי רשת ——— */
+.share-icons .facebook  .tooltip{ --tip-bg:#1877f2; --tip-fg:#fff; }
+.share-icons .whatsapp  .tooltip{ --tip-bg:#25D366; --tip-fg:#fff; }
+.share-icons .instagram .tooltip{ --tip-bg:#dd2a7b; --tip-fg:#fff; }/* מצב כהה */
+body.dark .share-icons .icon{
+  background:#111318;
+  color:#e9eaee;
+  border-color:rgba(255,255,255,.08);
+  box-shadow:none;
+}
+:root{
+  --mini-w: 440px;
+  --mini-gap: 24px;
+}
+
+/* ===== Cover (למקרה שתרצה להשתמש תמונה כאלמנט) ===== */
+@media (min-width: 1485px){
+  .acct-section{
+ padding-left: calc(var(--mini-w) + var(--mini-gap));  /* ← שמאל מפורש */
+    padding-right: 0;                                     /* ליתר ביטחון */  }
+
+
+.meta-mini{
+  position: fixed;
+  top: 240px;            /* כמה פיקסלים מתחת להדר הקבוע שלך */
+  left: clamp(8px, 2vw, var(--mini-gap));     /* רווח אדפטיבי */
+   width: var(--mini-w);
+   height: 400px;
+  overflow: auto;
+  border-radius: 12px;
+  background: #fff;
+  z-index: 0;
+  /* ביצועים */
+ will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+  contain: paint; 
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  backface-visibility: hidden;
+  /* אין שום טרנזישן בכלל */
+  transition: none !important;
+}
+}
+
+
+
+.meta-mini.is-smoothing{
+  /* בזמן גלילה – ריכוך תנועה */
+.meta-mini.is-smoothing{ transition: none !important; }}
+
+
+.meta-mini .vlogpage-meta{ margin:0; }
+
+
+
+/* מסילה ריקה בשמאל בדסקטופ */
+:root{
+  --mini-w: 440px;   /* רוחב המסילה/המיני בשמאל */
+  --mini-gap: 24px;  /* רווח בין המסילה לתוכן */
+  --content-w: 1000px;/* רוחב תיבת הטקסט הצרה */
+}
+
+@media (min-width: 1100px){
+  .acct-section{
+    padding-left: calc(var(--mini-w) + var(--mini-gap));
+    padding-right: 0;
+  }
+}
+
+/* תיבת התוכן – צרה וצמודה לימין */
+/* ===== טקסט: צמוד לימין באמת ===== */
+.acct-section .vlogpage-content{
+  width: min(100%, var(--content-w, 680px));
+  margin-inline-end: 0;       /* LTR: צמוד לשמאל */
+  margin-inline-start: auto;      /* דוחף את התיבה שמאלה */
+  padding-inline: 5px;
+  direction: ltr;               /* כיוון משמאל לימין */
+  text-align: right !important;  /* יישור טקסט לשמאל */
+  unicode-bidi: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* רשימות – ריווח ימני נכון */
+.vlogpage-content ul,
+.vlogpage-content ol{
+  padding-inline-start: 1.25rem;   /* נקודות/מספור בצד ימין ב-RTL */
+  padding-inline-end: 0;
+  margin: 1px 0;
+}
+
+/* קווצ׳ים/כותרות – בלי “גלישה” לשמאל */
+.vlogpage-content :where(p,h1,h2,h3,h4,h5,h6,blockquote,figure){
+  margin: 12px 0;
+  margin-inline-start: 0;
+}
+
+/* אם יש פלאוטים בתוכן שמזיזים – לנטרל */
+.vlogpage-content *[style*="float"],
+.vlogpage-content .alignleft,
+.vlogpage-content .alignright{
+  float: none !important;
+}
+
+.vlogpage-content h2{
+  font-size: clamp(22px, 2.6vw, 30px);
+  margin: 26px 0 10px;
+  line-height: 1.25;
+}
+.vlogpage-content h3{
+  font-size: clamp(18px, 2.2vw, 24px);
+  margin: 20px 0 8px;
+}
+.vlogpage-content p{ margin: 12px 0; }
+.vlogpage-content a{ color: var(--vp-accent-ink); text-decoration-color: rgba(248,148,156,.5); }
+.vlogpage-content a:hover{ text-decoration-color: var(--vp-accent); }
+
+.vlogpage-content img,
+.vlogpage-content video,
+.vlogpage-content iframe{
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--vp-border);
+  box-shadow: 0 12px 24px rgba(0,0,0,.06);
+}
+
+/* מצבי טעינה/שגיאה */
+.vlogpage-skel{ color:#808080; }
+.vlogpage-error{
+  color:#b00020; background:#ffe8ea; border:1px solid #ffccd1;
+  padding:10px 12px; border-radius:10px;
+}
+
+/* אנימציית לייק */
+@keyframes like-pop{ 0%{transform:scale(1)} 35%{transform:scale(1.25)} 100%{transform:scale(1)} }
+.stat.like.is-liked span[role="img"]{ animation: like-pop .3s ease; }
+
+
+/* מובייל */
+@media (max-width:640px){
+  .vlog-hero{ border-radius:12px; padding:16px 12px 22px; }
+  .vlogpage-title{ font-size: clamp(26px, 8vw, 40px); }
+  .vlogpage-title::after{ height:2px; }
+  .vlogpage-meta{ flex-wrap:wrap; gap:10px; padding:12px; }
+  .vlogpage-meta__divider{ display:none; }
+  .vlogpage-meta__right{ width:100%; justify-content:flex-start; }
+}
+
+/* מצב כהה */
+body.dark .vlogpage-meta,
+body.dark .vlogpage-cover,
+body.dark .stat,
+body.dark .icon-btn{ background:#111318; border-color:rgba(255,255,255,.08); color:#e9eaee; }
+body.dark .vlogpage-content{ color:#e9eaee; }
+body.dark .vlogpage-title::after,
+body.dark .vlogpage-rule{ background:#e9eaee; }
+body.dark .vlogpage-content blockquote{
+  background:#151821; border-inline-start-color:rgba(255,255,255,.12); color:#cfd3da;
+}
+
+
+/* From Uiverse.io by 0xnihilism */ 
+.card{
+  width: 750px;
+  height: auto;              /* הגובה נקבע לפי התוכן */
+  padding: 124px 200px 32px;   /* במקום 180px */
+  background: #fff;
+  border: 8px solid #000;
+  box-shadow: 15px 15px 0 #000;
+  transform: rotate(-2deg);
+  transform-origin: center;
+  transition: transform .3s ease, box-shadow .3s ease;
+  position: relative;
+  overflow: hidden;
+
+  /* יישור תוכן למרכז */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;                 /* מרווחים בין הילדים במקום padding ענק */
+  text-align: center;
+}
+
+
+.card:active {
+  animation: shake 0.5s ease-in-out;
+}
+.card:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 20px 20px 0 #000;
+}
+.banner {
+  position: absolute;
+  top: 1px;
+  right: -110px;
+  background: #000;
+  color: #fff;
+  padding: 15px;
+  width: 310px;
+  text-align: center;
+  transform: rotate(45deg);
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+.banner-text {
+  display: inline-block;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  width: 100%;
+  position: absolute;
+  left: 9%;
+  top: 55%;
+  font-size: 14px;
+  transform: translateY(-50%);
+}
+.banner:hover .banner-text:first-child {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.banner:hover .banner-text:last-child {
+  opacity: 1;
+  transform: translateY(-40%);
+}
+.banner-text:last-child {
+  opacity: 0;
+  transform: translateY(60%);
+}
+.banner:hover {
+  background: #f8949c;
+}
+
+
+.card__title {
+  font-size: 20px;
+  font-weight: 690;
+  color: #000;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+  display: block;
+  white-space: nowrap;
+  word-break: keep-all;
+  margin-top: -120px;
+  border-bottom: 2px solid #000;
+   text-align: center;
+  /* המרכזה אופקית בכל כיוון כתיבה */
+    margin-inline: auto;          /* נשאר ממורכז לוגית */
+  transform: translateX(40px);  /* ← הזזה קלה ימינה */
+}
+.card__subtitle {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333;
+  margin-bottom: 1px;
+  margin-top: -9px;
+  padding-bottom: 0px;
+  width: 200px;
+  
+}
+
+/* הקבוצה (אינפוט+כפתור) בשורה ובמרכז */
+.card__form{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+ max-width: 42px;
+  /* מרכוז אמיתי של הקבוצה */
+  justify-content: center;
+  align-items: center;
+  width: fit-content;      /* או max-content */
+  margin-inline: auto;     /* מרכז בתוך הכרטיס */
+  direction: ltr;
+  
+}
+/* שלא יהיו מרג'ינים דוחפים */
+.card__form input,
+.card__form .sign-up{
+  margin: 0;
+}
+/* אינפוט – רוחב נוח, בלי margin אוטומטי שמפריע לשורה */
+.card__form input{
+  padding: 12px;
+  border: 4px solid #000;
+  font-size: 16px;
+  font-family: "Proxima Nova", sans-serif;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  width: 200px;                 /* אפשר לשנות כרצונך */
+  text-align: center;
+  margin: 0;                    /* חשוב: לא margin-inline:auto */
+}
+.card__form input:focus{
+  outline: none;
+  transform: scale(1.05);
+}
+
+/* כפתור תואם גובה ונראה טוב ליד האינפוט */
+.sign-up{
+  border: 4px solid #000;
+  background: #000;
+  color: #fff;
+  padding: 12px 18px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+   text-decoration: none;  
+  height: 20px;                 /* גובה קרוב לגובה האינפוט */
+}
+
+/* רספונסיבי: במסכים צרים נערום אחד מעל השני */
+@media (max-width: 480px){
+  .card__form{
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .card__form input{
+    width: min(100%, 260px);
+  }
+}
+
+
+.sign-up:hover {
+  background: #fff;
+  color: #000;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 0 #000;
+}
+.sign-up:active {
+  animation: shake 0.5s ease-in-out;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+
+
+/* הפוטר עצמו – מונעים קריסת מרג'ינים ומבטלים מרג'ין חיצוני */
+.site-footer, footer {
+  background: #0b0b0b;           /* הצבע שלך */
+  margin: 0;                     /* בלי מרג'ין חיצוני */
+  padding-bottom: 24px;          /* ריווח פנימי במקום מרג'ין */
+  display: flow-root;            /* מונע margin-collapsing של ילדים */
+}
+
+/* הילדה האחרונה בתוך הפוטר – שלא תשאיר מרג'ין תחתון */
+.site-footer > *:last-child,
+footer > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* לוודא שהעוטפים לא מוסיפים רווח לבן אחרי הפוטר */
+.acct-wrap,
+.acct-section,
+.vlogpage-content {
+  margin-bottom: 0 !important;
+  padding-bottom: 0; /* אלא אם את באמת צריכה */
+}
+
+/* אם יש hr מעל הקרדיטים – שלא יוסיף רווח גדול */
+.site-footer hr { margin: 12px 0; }
+
+/* לא לתת ל-body מרווח ברירת מחדל בדפדפן (סתם ליתר ביטחון) */
+html, body { margin: 0; }
+
+
+
+@media (max-width: 900px){
+  /* כל הסקשן של הדף הופך ל-flex כדי שנוכל לשנות סדר */
+  .acct-section{
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hero למעלה */
+  .vlog-hero{
+    order: 1;
+  }
+
+  /* תוכן הוולוג באמצע */
+  .vlogpage-content{
+    order: 2;
+  }
+
+  /* meta-mini למטה בסוף */
+  .meta-mini{
+    order: 3;
+    display: block;              /* במקום display:none */
+    position: static;            /* שלא תצוף */
+    transform: none !important;  /* מבטל translate מה-JS אם יש */
+    margin: 24px 0;
+    width: 100%;
+  }
+}
+
+/* === מובייל: meta-mini והכרטיס נראים קטן ונורמלי === */
+@media (max-width: 600px){
+  /* המעטפת למטה – קצת ריווח מהצדדים */
+  .meta-mini{
+    padding: 0 12px;
+  }
+
+  .meta-mini .vlogpage-meta{
+    padding: 12px 0;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .meta-mini .share-block{
+    justify-content: center;
+  }
+
+  .meta-mini .vlogpage-meta__right{
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .meta-mini .hl-like,
+  .meta-mini .hl-views{
+    width: 100%;
+    max-width: 260px;
+  }
+
+  /* הכרטיס למייל – גודל נורמלי */
+  .meta-mini .card{
+    width: 100%;
+    max-width: 360px;
+    padding: 72px 16px 20px;
+    margin: 8px auto 0;
+    box-sizing: border-box;
+    border-width: 4px;
+    box-shadow: 8px 8px 0 #000;
+    transform: none;          /* בלי סיבוב/הגדלה במובייל */
+  }
+
+  .meta-mini .card__title{
+    margin-top: 0;
+    margin-bottom: 4px;
+    transform: none;
+    font-size: 18px;
+    white-space: normal;
+  }
+
+  .meta-mini .card__subtitle{
+    width: 100%;
+    max-width: 260px;
+    margin-inline: auto;
+  }
+
+  .meta-mini .card__form{
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .meta-mini .card__form input{
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .meta-mini .sign-up{
+    height: auto;
+    padding: 10px 16px;
+  }
+
+  .meta-mini .banner{
+    width: 220px;
+    right: -80px;
+    top: 0;
+    padding: 10px;
+    font-size: 14px;
+  }
+}

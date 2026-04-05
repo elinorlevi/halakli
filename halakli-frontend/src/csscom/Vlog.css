@@ -1,0 +1,175 @@
+/* טאבים אופציונליים למיון/פילטר */
+.vlog-tabs{
+  display:flex; gap:10px; justify-content:center; margin: 8px 0 18px;
+}
+.vlog-tab{
+  padding: 8px 14px;
+  border-radius: 999px;
+  background:#fff;
+  border:1px solid #e8e8e8;
+  cursor:pointer;
+  transition: background .2s, border-color .2s;
+}
+.vlog-tab.is-active{
+  background: #ffecef;
+  border-color: #f36b76;
+  font-weight: 600;
+}
+
+/* עטיפה כללית */
+.vlog-sec{
+  max-width: 1280px;
+  margin: 0 auto 60px;
+  padding: 0 12px;
+}
+.vlog-sec__title{
+  text-align: center;
+  margin: 0 0 22px;
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.vlog-sec__error{ text-align:center; color:#b00020; margin-bottom: 12px; }
+.vlog-sec__empty{ text-align:center; color:#666; margin: 16px 0; }
+
+/* גריד של שלושה כרטיסים */
+.vlog-sec__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+}
+@media (max-width: 1024px){
+  .vlog-sec__grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px){
+  .vlog-sec__grid{ grid-template-columns: 1fr; }
+}
+
+/* כרטיס */
+.vlog-card{
+  display: grid;
+  grid-template-rows: auto auto 1fr auto; /* מדיה, כותרת, תקציר, שורת פעולה */
+  gap: 10px;
+}
+
+/* מדיה */
+.vlog-card__media{
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #f2f2f2;
+}
+.vlog-card__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .80s ease;
+}
+.vlog-card__media:hover img{ transform: scale(1.03); }
+
+.vlog-card__ph{
+  width: 100%; height: 100%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight: 800; letter-spacing:.2em; opacity:.25;
+}
+
+/* טקסטים */
+.vlog-card__h3{
+  margin: 1px 0 0;
+  font-size: clamp(18px, 2.4vw, 22px);
+  text-align: right;
+  line-height: 1.35;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.vlog-card__h3 a{ color: inherit; text-decoration: none; }
+
+.vlog-card__excerpt{
+  color: #303030;
+  margin: -10px 0 0;
+  text-align: right;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;            /* בדיוק 3 שורות */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* שורת פעולה: כפתור "קרא עוד" + מונים */
+.vlog-card__actions{
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-start;      /* או center אם תרצי */
+  direction: ltr;
+  gap: 14px;
+}
+
+/* כפתור-קישור בסגנון Uiverse (הקו מתחת לטקסט בלבד) */
+.uiverse-btn{
+  position: relative;
+  display: inline-flex;
+  gap: .6rem;
+  background: none;
+  border: 0;
+  text-decoration: none;
+  color: #040303;
+  margin-top: -4px;                 /* היה -30px, מעודן יותר */
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  transition: color .4s cubic-bezier(0.25,0.8,0.25,1);
+}
+
+/* הקו מתחת לטקסט בלבד (על ה-span הפנימי) */
+.uiverse-btn > span{
+  position: relative;
+  display: inline-block;            /* חשוב כדי שהקו יתאים לרוחב הטקסט */
+}
+.uiverse-btn > span::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;                  /* מכסה את רוחב הטקסט בלבד */
+  bottom:-5px;                         /* צמוד לטקסט */
+  height:2px;                     /* קו עדין */
+  background:#f8949c;
+  transform: scaleX(0);             /* מתחיל סגור */
+  transition-property: width, left;
+  transition: transform .35s ease;
+}
+/* בריחוף/פוקוס – פותח את הקו */
+.uiverse-btn:hover > span::after,
+.uiverse-btn:focus-visible > span::after{
+  transform: scaleX(1);
+}
+/* נגישות */
+.uiverse-btn:focus-visible{
+  outline: 1px solid #f8949c;
+  outline-offset: 2px;
+}
+/* --- סטייל למוני לייקים/צפיות (מעודכן) --- */
+.vlog-stats{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* בסיס כל סטטיסטיקה */
+.vlog-stat{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* מפריד בין פריטים */
+.vlog-stat-sep{ opacity:.35; }
+
+/* אייקונים כלליים */
+.vlog-icon{ width:18px; height:18px; display:block; }
+
+@media (max-width: 640px){
+  .vlog-sec__grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+

@@ -1,0 +1,135 @@
+/* FAQ */
+.faq { 
+  max-width: 1200px; 
+  margin: 0 auto 80px;
+   padding: 0 8px;
+    direction: rtl; }
+.faq-category {
+  font-size: clamp(22px, 3vw, 32px);
+  margin: 36px 0 14px;
+  letter-spacing: .06em;
+}
+
+
+
+
+/* אותו כתב/טיפול כמו בהוראות שימוש */
+.faq .pp-acc1 {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(37, 36, 36);
+   }
+
+
+
+/* משאיר רק קו תחתון מתחת לשאלה (summary) */
+.pp-acc1 summary{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 10px 0;                 /* ריווח לשאלה עצמה */
+  border-bottom: 1px solid #f8949c7b;    /* ← הקו התחתון היחיד */
+}
+
+/* כשהשאלה נפתחת – התשובה תופיע מתחת לקו */
+.pp-acc-usage[open] .acc-panel.acc-js{
+  /* ה-JS כבר שם padding אנכי: 10px 0; נשאיר/נעדן כאן אם צריך: */
+  padding-top: 20px !important;     /* ריווח בין הקו לתשובה */
+  transition: max-height .25s ease, padding .2s ease;
+}
+
+.faq .faq-item,
+.faq .pp-acc,
+.faq .pp-acc-usage,
+.faq .acc-panel,
+.faq .pp-acc details {
+  border: 0;           /* מנקים כל קו אחר */
+}
+
+.acc-body{
+  margin-top: -18px;
+}
+.pp-acc1 details{
+  border-bottom: 1px solid #f8949c61;
+  background: #fff;
+}
+
+.pp-acc1 .acc-panel{
+  display: grid;
+  grid-template-rows: 0fr;                 /* סגור */
+  transition: grid-template-rows .35s ease, padding .2s ease;
+   overflow: hidden;                    /* אל תיתן לתוכן לגלוש מחוץ למעטפת */
+  max-height: 0;                       /* Fallback אם grid קופץ */
+  will-change: grid-template-rows, max-height, padding;
+  padding: 0;                               /* יתעדכן בפתיחה */
+}
+
+.pp-acc1 details[open] .acc-panel{
+  grid-template-rows: 1fr;                 /* פתוח */
+  max-height: 1200px;
+  transition: grid-template-rows .35s ease, padding .2s ease, max-height .35s ease;
+  padding: 8px 0 16px 0;
+}
+
+.pp-acc1 .acc-panel > .acc-body{
+  overflow: hidden;                         /* חשוב לגריד */
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .25s ease, transform .35s ease;
+}
+.pp-acc1 details[open] .acc-panel > .acc-body{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pp-acc1 summary{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 17.4px;
+}
+.pp-acc1 summary::-webkit-details-marker{ display:none; }
+
+.pp-acc1 .acc-icon{
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  transition: transform .2s ease;
+  opacity: .75;
+}
+.pp-acc1 details[open] .acc-icon{ transform: rotate(180deg); }
+
+
+.pp-acc1 .acc-body{
+  color:#444;
+  line-height:1.8;
+  white-space: pre-wrap;
+  font-size: 16.9px;
+}
+
+/* קו ברירת מחדל + טרנזישן */
+.pp-acc1 summary{
+  border-bottom: 1px solid #f8949c7b;
+  transition: border-color .25s ease, box-shadow .25s ease, border-width .25s ease;
+}
+
+/* כשהפריט פתוח – הדגשה */
+.pp-acc1 details[open] > summary{
+  border-bottom-color: #f8949c;     /* צבע חזק יותר */
+  border-bottom-width: 0px;         /* עיבוי הקו */
+  box-shadow: 0 -2px 0 #f8949c inset; /* “היילייט” עדין פנימה */
+}
+
+.pp-acc1 .acc-body ul{
+  list-style: disc;                 /* עגול מלא */
+  padding-inline-start: 1.2rem;
+  margin: 0;
+}
+
+.pp-acc1 .acc-body li::marker{
+  color: #f8949c;                   /* ורוד */
+  font-size: 1.1em;                /* טיפה גדול */
+}

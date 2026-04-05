@@ -1,0 +1,358 @@
+/* כשמודל פתוח – נועל גלילת רקע */
+body.modal-open { overflow: hidden; }
+:root{ --slide-ms: 800; } /* אותו זמן כמו ב-enter-active למטה */
+
+/* שכבת רקע שחורה חצי שקופה */
+.cw-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(1px);
+  display: grid;
+  place-items: center;
+  z-index: 99999;
+  padding: 12px; 
+  backdrop-filter: none !important;
+  transition: backdrop-filter .2s ease; 
+}
+
+.cw-dialog{
+  position: relative;
+  width: min(510px, 92vw);
+  height: min(95dvh, 880px);   /* 👈 גובה בפועל */
+  background: #000;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow: hidden;
+  display: block; 
+  --dlgW: min(630px, 92vw);          
+}
+
+/* דוגמה ל“מצב גבוה” אופציונלי */
+.cw-dialog.cw-tall{
+  width: min(640px, 96vw);
+  aspect-ratio: 2.8 / 4; /* יותר גבוה */
+  --dlgW: min(640px, 96vw);
+}
+
+
+
+
+/* אופציונלי: אם יש בעיית “קפיצה” בספארי iOS */
+.cw-dialog, .cw-overlay {
+  overscroll-behavior: contain;
+}
+
+
+.cw-content > video,
+.cw-content > img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;              /* למקרה של כללי ברירת מחדל */
+  object-fit: cover;            /* ממלא; יחתוך אם צריך */
+}
+
+/* כפתור סגירה */
+.cw-close{
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;          /* עובד ימין/שמאל */
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  border: 0;
+  background: #ffffffcc;
+  color: #111;
+  font-size: 22px;
+  line-height: 1;
+  display: grid; place-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+.cw-close:hover { transform: scale(1.06); }
+
+
+
+/* במובייל – מעט צר/נמוך יותר */
+@media (max-width: 600px){
+  .cw-dialog{ width: 96vw; max-height: 88vh; }
+}
+
+/* כפתור חזור (סגירה) בצד העליון */
+.cw-back{
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px; /* RTL/LTR */
+  background: transparent;
+  border: none;
+  padding: 6px;            /* אזור לחיץ נעים, בלי רקע */
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: none;        /* בלי צל של עיגול */
+  color: #fff;             /* צבע החץ */
+}
+.cw-back-icon{
+  width: 28px;
+  height: 28px;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.45)); /* נראות טובה על וידאו בהיר */
+}
+
+.cw-nav{
+  --btn: clamp(36px, 3vw, 56px);
+    box-sizing: border-box;
+  --offset: 8px; /* כמה להיכנס/לצאת מהשוליים של הדיאלוג */
+  position: fixed;              /* מותר להישאר fixed */
+  top: 50%;
+  right: calc((100vw - var(--dlgW)) / 2 - var(--offset));
+  transform: translateY(-50%);  /* מרכז אנכי */
+  width: var(--btn); 
+  height: var(--btn);
+  border-radius: 50%;
+  border: 2px solid #fff8f8;
+  background: #ffffff00; color: #ffffff;
+  display: grid; place-items: center;
+  z-index: 1000;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.cw-nav:hover{ transform: translateY(-50%) scale(1.08); }
+
+/* אחד מעל ואחד מתחת למרכז – מרווח קבוע */
+.cw-nav.prev{ margin-top: calc(-1 * (var(--btn)/2 + 10px)); }
+.cw-nav.next{ margin-top: calc(      var(--btn)/2 + 10px); }
+
+/* מובייל – אותו עקרון, רק offset קטן יותר אם רוצים */
+@media (max-width: 600px){
+  .cw-nav{ --offset: 6px; }
+}
+
+.cw-arrow{
+ font-weight: 200;    
+  transform-origin:11.2px 11.9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7em;
+  height: 1.7em;
+  line-height: 1;
+}
+.cw-arrow--up{   --s: 1.60; transform: rotate( 90deg) scale(var(--s)); }
+.cw-arrow--down{ --s: 1.60; transform: rotate(-90deg) scale(var(--s)); }
+
+/* במקום כיסוי מלא */
+.cw-pp{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:64px; height:64px;
+  border:0; background:transparent;
+  display:grid; place-items:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .15s ease;
+  z-index:10;            /* נמוך מהחיצים */
+}
+
+.cw-pp .cw-icon{
+  width: 100%;
+  height: 100%;
+  color: #ffffff79;                         /* צבע הסמל */
+  font-size: 60px;                     /* הסמל גדול יותר */
+  display: grid; place-items: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,.35);
+  backdrop-filter: blur(2px);
+  background: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  border: 0 !important;
+}
+
+@media (max-width: 600px){
+  .cw-pp{ width: 72px; height: 72px; }
+  .cw-pp .cw-icon{ font-size: 30px; }
+}
+
+.cw-pp.show, .cw-pp.is-paused{ opacity:.95; pointer-events:auto; }
+/* מוצג זמנית (כשמנגן ונגענו/הזזנו עכבר) */
+.cw-pp.show{
+  opacity: .9;
+  pointer-events: auto;
+}
+
+.cw-cart{
+  position: fixed;
+  top: calc(50% + 30%); 
+  z-index: 1200;     
+  inset-inline-end: 2px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #f4efef;
+  box-shadow: none;
+  pointer-events: auto;   
+  }
+.cw-cart-icon{
+  width: 70px; height: 100px;
+  pointer-events: none;
+}
+
+@media (max-width: 600px){
+  .cw-cart{ width: 40px; height: 40px; inset-inline-end: 16px; }
+  .cw-cart-icon{ width: 22px; height: 22px; }
+}
+
+/* בועת "הוסף לסל" – מתחת לאייקון, ממורכזת */
+.cw-tip{
+  position: absolute;
+  top: calc(100% + 10px);   /* מתחת לכפתור */
+  inset-inline-start: 50%;  /* מרכז אופקי */
+  transform: translate(-50%, 0) scale(.98);
+  background: #f8949c;      /* הצבע שבחרת */
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(0,0,0,.28);
+  z-index: 61;
+  /* ברירת מחדל: מוסתר */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+/* חץ משולש במרכז העליון – כמו בתמונה */
+.cw-tip::after{
+  content: "";
+  position: absolute;
+  top: -6px;                /* יושב מעל הבועה */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #f8949c;  /* אותו צבע של הבועה */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.18)); /* צל עדין לחץ */
+}
+
+/* הצגת הבועה ב-hover/focus על הכפתור */
+.cw-cart:hover .cw-tip,
+.cw-cart:focus-visible .cw-tip{
+  opacity: 1;
+  transform: translate(-50%, -48%) scale(1);
+}
+
+/* במובייל – אפשר להציג מתחת לאייקון כדי שלא יצא מהמסך */
+@media (max-width: 600px){
+  .cw-tip{
+    inset-inline-end: 50%;
+    top: calc(100% + 10px);
+    transform: translate(50%, 0) scale(.98);
+  }
+  .cw-tip::after{
+    top: -6px;
+    inset-inline-end: 50%;
+    transform: translate(50%, 0) rotate(45deg);
+  }
+}
+
+
+/* המכולה – טוב שהוספת רקע שחור כאן */
+.cw-content{
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+  isolation: isolate;
+  background: transparent;
+}
+
+/* שכבות – קומפוזיט יציב בלי 0.001px (גורם לריצוד תת־פיקסלי) */
+.cw-layer{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout paint;    /* בידוד ציור/לייאאוט */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: auto;        /* לא קבוע */
+}
+
+.cw-layer.is-enter{ z-index: 2; }
+.cw-layer.is-leave{ z-index: 1; pointer-events: none; }
+
+/* במקום visibility:hidden → Opacity 0 שומר קומפוזיט ומונע הבזק */
+.cw-layer.is-enter.awaiting-paint{
+  opacity: 0;               /* מוסתרת ויזואלית אבל נשארת על ה-GPU */
+  visibility: visible;      /* חשוב! שלא יפורק הקומפוזיט */
+  z-index: 1;               /* הישן מעל עד שיש פריים */
+}
+
+.cw-layer.is-enter.ready{
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+/* מצבי התחלה/סיום – Z=0 עקבי */
+.cw-layer.enter-up   { transform: translate3d(0,  100%, 0); }
+.cw-layer.leave-up   { transform: translate3d(0,    0%, 0); }
+
+.cw-layer.enter-down { transform: translate3d(0, -100%, 0); }
+.cw-layer.leave-down { transform: translate3d(0,    0%, 0); }
+
+/* אנימציה חלקה יותר (אינרציה עדינה) */
+.cw-layer.enter-up.enter-active,
+.cw-layer.enter-down.enter-active{
+  transform: translate3d(0, 0, 0);
+  transition: transform calc(var(--slide-ms, 800) * 1ms) cubic-bezier(.22,.61,.36,1);
+}
+.cw-layer.leave-up.leave-active{
+  transform: translate3d(0, -100%, 0);
+  transition: transform calc(var(--slide-ms, 800) * 1ms) cubic-bezier(.22,.61,.36,1);
+}
+.cw-layer.leave-down.leave-active{
+  transform: translate3d(0, 100%, 0);
+  transition: transform calc(var(--slide-ms, 800) * 1ms) cubic-bezier(.22,.61,.36,1);
+}
+
+/* will-change רק בזמן תנועה — מונע “גמגום” */
+.cw-layer.enter-up.enter-active,
+.cw-layer.enter-down.enter-active,
+.cw-layer.leave-up.leave-active,
+.cw-layer.leave-down.leave-active{
+  will-change: transform;
+}
+
+/* המדיה עצמה על קומפוזיט חלק */
+.cw-layer > video,
+.cw-layer > img,
+.cw-snapshot{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: paint;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* למקרה שיש “Freeze” – תני לו עדיפות מעל השכבות */
+.cw-freeze{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* למי שמעדיף פחות תנועה */
+@media (prefers-reduced-motion: reduce){
+  :root{ --slide-ms: 0; }
+}

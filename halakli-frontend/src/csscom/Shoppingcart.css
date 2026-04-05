@@ -1,0 +1,247 @@
+.cart-overlay{
+  position: fixed;
+  inset: 0;
+  /* שכבת כהות קלה מעל הטשטוש */
+  background: rgba(3, 3, 3, 0.451);
+
+  /* הטשטוש עצמו (מאחורי האוברליי) */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Safari */
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 1100;
+
+  /* שיפור ביצועים */
+  will-change: opacity;
+}
+
+
+.cart-overlay.is-open{
+  opacity: 1;
+  pointer-events: auto;
+  
+}
+
+.cart-drawer{
+  position: fixed;
+  /* למקם מימין: top/right/bottom קבועים, left אוטומטי */
+  inset: 0 0 0 auto;         /* top right bottom left */
+  right: 0;
+  left: auto;
+
+  width: min(480px, 95vw);
+  background: #fff;
+
+  /* מצב סגור: מחוץ למסך לכיוון ימין */
+  transform: translateX(105%);
+  transition: transform .28s ease;
+
+  z-index: 1110;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.cart-drawer.is-open{ transform: translateX(0); }
+
+/* כותרת */
+.cart-header{
+  padding: 18px 20px 8px;
+  border-bottom: 1px solid #f8949c52;
+  text-align: center;
+  
+}
+.cart-close{
+  position: absolute;
+  top: 8px; left: 12px;     /* שמאל כי RTL */
+  font-size: 28px;
+  line-height: 1;
+  background: none; border: 0; cursor: pointer;
+}
+.cart-title{
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 500;
+
+}
+
+
+.cart-free-msg{
+  margin: 0 0 10px;
+  color: #939090;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cart-free-icon{ color:#16a34a; font-size:1.1em; }
+
+.cart-progress{
+  height: 6px;
+  background: #e7e7e7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cart-progress__bar{
+  height: 100%;
+  width: 0;
+  background: #f8949c;
+  border-radius: 999px;
+}
+
+/* גוף */
+.cart-body{
+  padding: 16px 18px;
+  overflow: auto;
+}
+.cart-empty{
+  color: #666; text-align: center; margin: 20px 0; font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.cart-list{ list-style: none; margin: 0; padding: 0; display: grid; gap: 18px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+.cart-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  font-size: 15px;
+  gap: 12px;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.cart-item__info{
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.cart-item__img {
+  max-width: 90%;   /* לא יותר מ־90% מהקוביה */
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: auto;     /* מרכז את התמונה */
+}
+
+
+.cart-item__text{ display: grid; gap: 4px; }
+.cart-item__title{ font-weight: 700; }
+.cart-item__meta{ color: #7a7a7a; font-size: 14px; }
+.cart-item__price{ color: #222; font-weight: 600; margin-top: 2px; }
+
+.cart-item__controls{
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}
+.cart-item__remove{
+  background: none; border: 0; color: #7a7a7a; text-decoration: underline; cursor: pointer;
+}
+.cart-qty{
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.cart-qty__btn{
+  background: none; border: 0; font-size: 18px; width: 28px; cursor: pointer;
+}
+.cart-qty__val{ min-width: 18px; text-align: center; }
+
+/* פוטר קבוע */
+.cart-footer{
+  border-top: 1px solid #f8949c52;
+  padding: 12px 18px 16px;
+  background: #ffffff;
+}
+.cart-row{
+  display: grid; grid-template-columns: 1fr auto; align-items: center;
+  margin-bottom: 10px; color: #444;
+}
+.cart-col--val{ font-weight: 700;   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+
+.cart-terms{
+  display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 10px;
+  color: #555; margin: 8px 0 12px; font-size: 15px;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.cart-terms input{ transform: translateY(2px); }
+
+.cart-paybtn{
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  background: #000000;
+  color: #fff;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     transition: background-color .2s ease, transform .06s ease;
+
+}
+.cart-paybtn:disabled{
+  opacity: .5; cursor: not-allowed;
+}
+.cart-paybtn:hover,
+.cart-paybtn:focus-visible{
+  background: #f8949c;       /* ורוד */
+}
+
+
+.cart-col{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+/* מובייל קטן */
+@media (max-width: 420px){
+  .cart-item__info{ grid-template-columns: 76px 1fr; }
+  .cart-item__img{ width: 76px; height: 76px; }
+}
+
+
+/* עטיפת כפתור העגלה */
+.cart-btn-with-badge{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* הבדג' העגול */
+.cart-badge{
+  position: absolute;
+  height: 18px;
+  padding: 0 6px;            /* יתאים אוטומטית ל-2–3 ספרות */
+  border-radius: 999px;
+  background: #f8949c;       /* צבע רקע */
+  color: #fff;               /* צבע טקסט */
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transform: translateZ(0);
+  animation: badge-pop .18s ease-out;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* אם האייקון גדול (למשל size="2x"), אפשר להרים קצת יותר */
+.account-icon--cart .cart-badge{
+  top: -8px;
+  inset-inline-start: -6px;
+}
+
+/* פופ קטן בכניסה */
+@keyframes badge-pop{
+  from{ transform: scale(.6); opacity: 0; }
+  to  { transform: scale(1);  opacity: 1; }
+}
+
+/* אופציונלי: גבולות לכמות גדולה */
+.cart-badge.is-max { letter-spacing: .3px; }

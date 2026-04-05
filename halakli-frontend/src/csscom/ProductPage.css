@@ -1,0 +1,883 @@
+/* =========================
+   גלריה ממורכזת
+========================= */
+.product-page .pp-stage{
+  display:flex;
+  gap:90px;
+  align-items:center;
+  justify-content:center;
+}
+
+
+
+
+/* =========================
+   עוטף ממוזערות + חיצים
+========================= */
+.pp-thumbs-wrap{
+  position: relative;
+  display: flex;
+  flex-direction: column;   /* דסקטופ: אנכי */
+  align-items: center;
+  margin-top: -30px;
+}
+
+/* המיכל של הממוזערות עצמן */
+.product-page .pp-thumbs-vert{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  /* מציג את כולן ללא גלילה בדסקטופ */
+  max-height:none;
+  overflow:visible;
+  padding:0;
+  scrollbar-width:auto;
+  -ms-overflow-style:none;
+}
+
+/* ריווח כדי שהחיצים לא יכסו על הממוזערות הראשונות/האחרונות */
+.pp-thumbs-wrap .pp-thumbs-vert{
+  padding-block: 28px;
+}
+
+.product-page .pp-thumbs-vert::-webkit-scrollbar{ width:0; height:0; }
+
+/* =========================
+   כפתורי ניווט (חיצים)
+========================= */
+.pp-nav-btn{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid; place-items: center;
+  border: 0;
+  background: rgba(16, 16, 16, 0);
+  color: #0f0f0faf;
+  cursor: pointer;
+  z-index: 9;
+}
+.pp-nav-prev{ top: -6px; }
+.pp-nav-next{ bottom: -6px; }
+
+.pp-nav-btn svg{
+  pointer-events: none;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* =========================
+   ממוזערות
+========================= */
+.pp-thumb{
+  appearance: none; -webkit-appearance: none;
+  width:70px !important;
+  height:90px !important;           /* מלבן אנכי */
+  padding:9px !important;           /* כמה "מסביב" ייראה */
+  border:1px solid transparent !important;
+  border-radius:0 !important;
+  background:#fff !important;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transform:none !important;
+  transition: box-shadow .15s ease, border-color .15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* מבטלים כל אפקט אפור בהובר/לחיצה */
+.pp-thumb:hover,
+.pp-thumb:active{
+  background:#fff !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
+
+/* מצב נבחר: רק מסגרת שחורה */
+.pp-thumb.is-active{
+  border-color:#000 !important;
+  box-shadow:none !important;
+}
+
+/* פוקוס נגישות עדין (לא חובה) */
+.pp-thumb:focus{ outline:none; }
+.pp-thumb:focus-visible{
+  outline: 2px solid #f8949c;
+  outline-offset: 2px;
+}
+
+/* התמונה בתוך הממוזערת – תמיד תצוגה מלאה */
+.pp-thumb img{
+  width:100%; height:100%;
+  object-fit:contain;
+  border-radius:0;
+  display:block;
+  -webkit-user-drag:none;
+  user-select:none;
+}
+
+/* =========================
+   תמונה ראשית – זום אינליין
+========================= */
+.product-page .pp-main{
+  position: relative;
+  flex: 0 0 auto;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  text-align: center;
+  overflow: hidden;              /* הזום נשאר בתוך המסגרת */
+  background: #fff;              /* רקע נקי */
+}
+
+.product-page .pp-main img{
+  width: auto !important;
+  height: auto !important;
+  max-width: min(820px, 90vw);
+  max-height: 70vh;
+  object-fit: contain !important;
+  display: block;
+  will-change: transform;
+  transition: transform 80ms ease;
+}
+
+.product-page .pp-main.is-zoomed { cursor: crosshair; }
+
+/* כפתור זכוכית מגדלת */
+.pp-zoom-btn{
+  position:absolute;
+  top:16px; left:17px;
+  width:40px; height:40px;
+  display:grid; place-items:center;
+  background:#8a858500;            /* צבע המותג שלך */
+  color:#646161;
+  border:0;
+  border-radius:14px;
+  cursor:pointer;
+  z-index:5;
+}
+
+.pp-zoom-btn svg{
+  width:24px;           /* היה ~22px בקוד */
+  height:24px;
+}
+
+/* =========================
+   מובייל (<=900px): אופקי
+========================= */
+@media (max-width:900px){
+  .product-page .pp-stage{ flex-direction:column-reverse; }
+
+  .pp-thumbs-wrap{
+    width: 100%;
+    flex-direction: row;                 /* אופקי */
+    align-items: stretch;
+  }
+
+  .pp-nav-btn{
+    top: 50%;
+    transform: translateY(-50%);
+    left: auto;
+    background: rgba(139, 68, 68, 0);
+  }
+  .pp-nav-prev{ right: auto; left: 80px; }
+  .pp-nav-next{ right: 80px; left: auto; }
+
+  .pp-thumbs-wrap .pp-thumbs-vert{
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    max-height: none;
+    padding: 0 36px;                     /* מקום לחיצים הצדדיים */
+    justify-content:center;
+  }
+
+  .product-page .pp-thumbs-vert::-webkit-scrollbar{ width:0; height:0; }
+
+  .pp-thumb{ width:68px !important; height:68px !important; padding:6px !important; }
+}
+
+.price-now{
+  font-size: 25px;
+}
+
+.pp-text{
+  line-height: 0.9 !important;      /* היה 1.7–1.8 */
+}
+
+.product-page .pp-info .pp-acc-usage summary{
+  font-size: clamp(18px, 2.2vw, 15px);
+}
+/* =========================
+   מידע מוצר
+========================= */
+/* ====== אקורדיון מידע מוצר ====== */
+
+.pp-acc{
+  margin-top: 2px;
+  border-top: 1px solid #f8949c61;
+}
+
+.acc-body{
+  margin-top: -18px;
+}
+.pp-acc details{
+  border-bottom: 1px solid #f8949c61;
+  background: #fff;
+}
+
+.pp-acc .acc-panel{
+  display: grid;
+  grid-template-rows: 0fr;                 /* סגור */
+  transition: grid-template-rows .35s ease, padding .2s ease;
+   overflow: hidden;                    /* אל תיתן לתוכן לגלוש מחוץ למעטפת */
+  max-height: 0;                       /* Fallback אם grid קופץ */
+  will-change: grid-template-rows, max-height, padding;
+  padding: 0;                               /* יתעדכן בפתיחה */
+}
+
+.pp-acc details[open] .acc-panel{
+  grid-template-rows: 1fr;                 /* פתוח */
+  max-height: 1200px;
+  transition: grid-template-rows .35s ease, padding .2s ease, max-height .35s ease;
+  padding: 8px 0 16px 0;
+}
+
+.pp-acc .acc-panel > .acc-body{
+  overflow: hidden;                         /* חשוב לגריד */
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .25s ease, transform .35s ease;
+}
+.pp-acc details[open] .acc-panel > .acc-body{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pp-acc summary{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+.pp-acc summary::-webkit-details-marker{ display:none; }
+
+.pp-acc .acc-icon{
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  transition: transform .2s ease;
+  opacity: .75;
+}
+.pp-acc details[open] .acc-icon{ transform: rotate(180deg); }
+
+
+.pp-acc .acc-body{
+  color:#444;
+  line-height:1.8;
+  white-space: pre-wrap;
+}
+
+
+.pp-title{
+font-weight: 550;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: 20px;
+  margin: 5px 0 4px !important;
+}
+.pp-title-main{
+  margin: 6px 0 16px ;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: .2px;
+  color: #111;
+  font-size: clamp(22px, 2.6vw, 36px);
+  text-align: right;
+  /* קיצור כותרות ארוכות לשתי שורות */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  position: relative;
+  padding-block-end: 10px; /* מקום לקו ההדגשה */
+}
+.pp-title-main::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: 0;         /* ימין ב-RTL */
+  width: 590px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg,#f8949c00,  #f8949c17, #ffbdc267, #f8949c61);
+}
+
+
+/* אופציונלי: מרווח כללי בחלק המידע */
+/* רוחב מקסימלי ויחס רספונסיבי לעמודת המידע */
+.product-page {
+  --info-width: clamp(580px, 50vw, 520px); /* מינימום 280, מקסימום 520 */
+   --info-nudge-x: -50px;     
+}
+
+.pp-info{
+  text-align: right;
+  flex: 0 0 var(--info-width);
+  max-width: var(--info-width);
+  width: 100%;
+    transform: translateX(var(--info-nudge-x));
+  will-change: transform;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+/* במובייל – שחררי לרוחב מלא ומרכזי */
+@media (max-width: 900px){
+  .pp-info{
+    flex: 1 1 auto;
+    max-width: 100%;
+    width: 100%;
+    margin-inline: 0;
+  }
+}
+
+
+/* כפתור הוספה לסל */
+.btn-primary{
+  display:inline-block;
+  background:#111;
+  color:#fff;
+  text-decoration:none;
+  padding:10px 16px;
+  border-radius:10px;
+}
+
+/* ===== מניעת התנגשות: פאנל שמנוהל ב-JS ===== */
+.pp-acc .acc-panel.acc-js{
+  display: block !important;              /* לא grid → אין grid-template-rows */
+  grid-template-rows: initial !important; /* נטרול מוחלט של grid rows */
+  overflow: hidden;
+  transition: max-height .35s ease, padding .2s ease !important;
+  will-change: max-height, padding;
+}
+
+/* כשפתוח – לא ניתן ל-grid לשנות כלום */
+.pp-acc details[open] .acc-panel.acc-js{
+  grid-template-rows: initial !important;
+  padding: 0;
+}
+
+/* שומר את הפאנל מוצג תמיד, גם כשה-details סגור – אנחנו סוגרים עם max-height */
+.pp-acc details > .acc-panel.acc-js{
+  display: block !important;
+}
+
+/* מיכל שכבות (בפנים שתי התמונות) */
+.pp-main-stack{
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;        /* שלא ילכוד קליקים, הכפתור מעל */
+}
+.pp-main-stack > .pp-main-img{
+  grid-area: 1 / 1;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  position: relative;          /* מאפשר z-index */
+  will-change: transform, opacity, filter, clip-path;
+  contain: paint;              /* ביצועים טובים יותר */
+  pointer-events: auto;        /* כן לאפשר קליקים על התמונה העליונה */
+}
+
+/* פרמטרים לשליטה מהירה */
+:root{
+  --pp-swipe-dur: 520ms;                   /* משך המעבר */
+  --pp-ease: cubic-bezier(.2,.7,0,1);      /* עקומת תנועה */
+}
+
+/* המיכל של שתי השקופיות */
+.pp-main-stack{
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;                        /* מסתירים את ה"גלילה" מחוץ למסגרת */
+  min-height: 420px;                       /* תואם ל-.pp-main (יש לך כבר min-height) */
+}
+
+/* כל שקופית (עטיפה) מוערמת זו על זו */
+.pp-slide{
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+/* התמונה עצמה – שמורה על contain והמידות שלך */
+.pp-slide .pp-main-img{
+  max-width: min(820px, 90vw);
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* שכבה נכנסת מעל, יוצאת מתחת (רק בשביל סדר) */
+.fx-enter-up, .fx-enter-down{ z-index: 2; }
+.fx-leave-up, .fx-leave-down{ z-index: 1; }
+
+/* ===== קדימה: חדשה נכנסת מלמטה, ישנה יוצאת למעלה ===== */
+.fx-enter-up{ animation: ppEnterUp var(--pp-swipe-dur) var(--pp-ease) both; }
+@keyframes ppEnterUp{
+  from{ transform: translateY(100%); opacity: .6; }
+  to  { transform: translateY(0);    opacity: 1;  }
+}
+
+.fx-leave-up{ animation: ppLeaveUp var(--pp-swipe-dur) var(--pp-ease) both; }
+@keyframes ppLeaveUp{
+  from{ transform: translateY(0);     opacity: 1;  }
+  to  { transform: translateY(-100%); opacity: .0; }
+}
+
+/* ===== אחורה: חדשה נכנסת מלמעלה, ישנה יוצאת למטה ===== */
+.fx-enter-down{ animation: ppEnterDown var(--pp-swipe-dur) var(--pp-ease) both; }
+@keyframes ppEnterDown{
+  from{ transform: translateY(-100%); opacity: .6; }
+  to  { transform: translateY(0);     opacity: 1;  }
+}
+
+.fx-leave-down{ animation: ppLeaveDown var(--pp-swipe-dur) var(--pp-ease) both; }
+@keyframes ppLeaveDown{
+  from{ transform: translateY(0);    opacity: 1;  }
+  to  { transform: translateY(100%); opacity: .0; }
+}
+
+/* בזמן זום – לא להריץ אנימציות כדי לא להתנגש עם scale */
+.product-page .pp-main.is-zoomed .pp-main-stack .pp-slide{
+  animation: none !important;
+}
+.product-page .pp-main.is-zoomed .pp-main-stack .pp-main-img{
+  animation: none !important;
+}
+
+/* נגישות: הפחתת תנועה */
+@media (prefers-reduced-motion: reduce){
+  .fx-enter-up, .fx-leave-up, .fx-enter-down, .fx-leave-down{
+    animation: none !important;
+  }
+}
+
+/* ========= תוספת: אפקט סגירה חלק לאקורדיון ========= */
+/* מוסיפות דהייה/תזוזה עדינה לפאנל עצמו, כך שגם בסגירה יש מעבר נעים */
+.pp-acc .acc-panel{
+  transition:
+    max-height .35s var(--pp-ease, cubic-bezier(.2,.7,0,1)),
+    padding .2s ease,
+    opacity .25s ease,
+    transform .35s var(--pp-ease, cubic-bezier(.2,.7,0,1));
+}
+
+/* כשה-<details> נסגר (אין [open]) – הפאנל דוהה ומתרומם מעט */
+.pp-acc details:not([open]) .acc-panel{
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* כשהוא פתוח – נראה ומיושר חזרה (גם לפתיחה יש אפקט) */
+.pp-acc details[open] .acc-panel{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* שמירה על נגישות: ללא אנימציות למי שמבקש פחות תנועה */
+@media (prefers-reduced-motion: reduce){
+  .pp-acc .acc-panel{ transition: none !important; }
+}
+
+
+/* שורת הוספה לסל */
+.addtocart-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  flex-wrap:wrap; /* שישבר יפה במסכים צרים */
+}
+
+/* תווית "כמות" */
+.qty-wrap{
+  font-weight:400;
+  font-size: 17px;
+}
+
+/* מעטפת הפלוס/מינוס + קלט */
+.qty-control{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;              /* היה 6px */
+  padding:2px;          /* היה 4px */
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:#fff;
+  height:38px;          /* גובה קבוע למעטפת */
+  box-sizing:border-box;
+  overflow:hidden;      /* שומר הכל בפנים */
+}
+
+/* כפתורי –/+ */
+.qty-btn{
+  display:grid;         /* מרכז את הסימן */
+  place-items:center;
+  width:12px;           /* היה 34/20 – קיבוע קטן יותר */
+  height:50px;
+  padding:0;            /* אין רווח פנימי */
+  border:none;
+  border-radius:6px;
+  background:transparent;
+  font-size:16px;       /* להקטין את הסימן */
+  line-height:1;
+  cursor:pointer;
+  transition: background .15s ease, transform .06s ease;
+  user-select:none;
+  flex:0 0 auto;        /* לא להימתח */
+}
+.qty-btn:active{ transform: translateY(1px); }
+.qty-btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+.qty-input{
+  width:52px;           /* היה 64px */
+  height:26px;          /* מתאים לגובה המעטפת */
+  text-align:center;
+  border:none;
+  outline:none;
+  font-size:14px;
+  padding:0;            /* בלי padding כדי לחסוך מקום */
+  background:transparent;
+  appearance:textfield;
+  flex:0 0 52px;        /* רוחב קבוע – לא יברח */
+  box-sizing:border-box;
+}
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* כפתור הוספה לסל */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#111;
+  color:#fff;
+  text-decoration:none;
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  transition: background .2s ease, transform .06s ease;
+}
+.btn-primary:hover{
+  background:#f8949c; /* ורוד בהובר */
+}
+.btn-primary:active{
+  transform: translateY(1px);
+}
+.btn-icon{
+  width:18px;
+  height:18px;
+}
+
+
+/* === קטן ורק בדף עם look--sm — מציג את כל הכרטיסיות, בלי חצים === */
+.look-section.look--sm{
+  --sm-card-w: 170px;  /* רוחב כרטיס קטן */
+  --sm-gap: 12px;      /* ריווח בין כרטיסים */
+}
+
+.look-section.look--sm .look-wrapper{
+  max-width: none !important;
+  margin-inline-start: auto;   /* דוחף ימינה ב-RTL */
+  margin-inline-end: 0 !important;
+}
+
+
+
+/* המסילה הופכת לגריד רגיל שמדביק את כל הכרטיסים לשורות */
+.look-section.look--sm .look-track{
+  display: grid !important;
+  grid-auto-flow: row !important;
+  grid-template-columns: repeat(auto-fit, minmax(var(--sm-card-w), var(--sm-card-w))) !important;
+  gap: var(--sm-gap) !important;
+
+  /* מבטלים קרוסלה/גלילה/סנאפ רק בווריאציה הזו */
+  overflow-x: visible !important;
+  scroll-snap-type: none !important;
+  justify-content: end !important; /* מיישר את כל הטרקים לימין */
+  justify-items: start;            /* כל כרטיס מתחיל בתחילת התא */
+  scroll-padding: 0 !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+/* הכרטיס נשלט ע"י הגריד (לא גודל קבוע) */
+.look-section.look--sm .look-card{
+  width: 100%;
+  /* אפשר להשאיר את ה-aspect-ratio שלך כרגיל */
+}
+
+/* מסתירים חצים רק בדף הזה */
+.look-section.look--sm .look-nav{
+  display: none !important;
+}
+
+/* מסתירים את אפקט ה-fade בקצוות רק בדף הזה */
+.look-section.look--sm .look-wrapper::before,
+.look-section.look--sm .look-wrapper::after{
+  display: none !important;
+}
+
+/* אופציונלי: במובייל להקטין עוד קצת את הכרטיסים */
+@media (max-width: 600px){
+  .look-section.look--sm{
+    --sm-card-w: 150px;
+    --sm-gap: 10px;
+  }
+}
+
+.products-grid--right{
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;     /* לימין */
+  align-items: flex-start;        /* בלי מתיחות אנכית */
+  transform: translateX(clamp(8px, 1.5vw, 22px)); /* דחיפה קטנה ימינה */
+}
+
+/* מונע מהכרטיסים לגדול */
+.products-grid--right > *{
+  --card-w: 290px;                /* שנה כרצונך: 200–280px */
+  flex: 0 0 var(--card-w);        /* לא גדל, לא מצטמצם מעבר לרוחב */
+  width: var(--card-w);
+  max-width: var(--card-w);
+  box-sizing: border-box;
+}
+
+/* יישור מרכזי לכל כרטיס */
+.products-grid .mini-card{
+  text-align: center;
+}
+
+/* גוף הכרטיס: ריווח אנכי עקבי */
+.products-grid .mini-card__body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;                 /* 👈 שלוט ברווחים בין השורות */
+}
+
+
+
+/* מסילה שמאלית בדסקטופ – מפנה מקום לתוכן */
+:root{
+  --help-w: 360px;   /* רוחב הבועה */
+  --help-gap: 24px;  /* רווח בין הבועה לתוכן */
+}
+
+@media (min-width: 1100px){
+  .acct-section{
+    padding-left: calc(var(--help-w) + var(--help-gap));
+    padding-right: 0;
+  }
+}
+
+/* הבועה הצפה בצד שמאל של ה-viewport */
+.pp-help-stick{
+  position: fixed;                               /* כדי שנוכל להזיז עם translate בגלילה */
+  top: 1px;                                    /* ← תואם TARGET_TOP בקוד */
+  right: clamp(1070px, 2vw, var(--help-gap)) !important; /* הצמדה שמאלה בצורה אדפטיבית */
+   left: 0;  
+  width: var(--help-w);
+  max-width: min(42vw, 420px);
+  z-index: 50;
+  border-radius: 12px;
+  padding: 14px 14px 10px;
+  /* ביצועים – בלי טרנזישן כדי שלא ימרח בגלילה */
+  transition: none !important;
+  will-change: transform;
+  backface-visibility: hidden;
+  
+}
+
+.help-ico{
+color: #ec6e78;
+}
+
+/* קו תחתון אנימטיבי רק מתחת לטקסט של הקישור */
+.help-link1,
+.help-link2{
+  position: relative;
+  display: inline-block;   /* כדי שהקו ימדוד את רוחב הטקסט בלבד */
+  text-decoration: none;   /* נבטל קו רגיל */
+  color: #111;             /* או צבע המותג שלך */
+   font-weight: 700;  
+}
+.help-link2::after{
+    content: "";
+  position: absolute;
+  left: 200px;
+  right: 0;                /* מכסה את רוחב הטקסט בלבד */
+  bottom: -4px;            /* הצמידי/שני גובה לפי הפונט */
+  height: 2px;
+  background: #f8949c;     /* ורוד המותג */
+  transform: scaleX(0);    /* מתחיל סגור */
+  transform-origin: right; /* נפתח מימין לשמאל (RTL) */
+  transition: transform .35s ease;
+}
+
+.help-link1::after{
+  content: "";
+  position: absolute;
+  left: 265px;
+  right: 0;                /* מכסה את רוחב הטקסט בלבד */
+  bottom: -4px;            /* הצמידי/שני גובה לפי הפונט */
+  height: 2px;
+  background: #f8949c;     /* ורוד המותג */
+  transform: scaleX(0);    /* מתחיל סגור */
+  transform-origin: right; /* נפתח מימין לשמאל (RTL) */
+  transition: transform .35s ease;
+}
+
+/* במעבר/פוקוס – פותח את הקו */
+.help-link1:hover::after,
+.help-link1:focus-visible::after,
+.help-link2:hover::after,
+.help-link2:focus-visible::after{
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+/* כשהיא “נוגעת” בתוכן – מצב קומפקטי (מופעל מה-JS ע"י class is-compact) */
+.pp-help-stick.is-compact{
+  transform: translate3d(0, 0, 0);  /* ה-JS כבר מחשב את ה-translate; רק דוגמה */
+  padding: 10px 12px 8px;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.05);
+
+}
+
+.pp-help-stick .help-row{
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px 10px;
+  align-items: start;
+  margin: 8px 0;
+}
+.pp-help-stick .help-ico{ font-size: 18px; line-height: 1; }
+.pp-help-stick .help-link{
+  font-weight: 700;
+  text-decoration: none;
+  color: #111;
+}
+.pp-help-stick .help-sub{
+  grid-column: 2 / -1;
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* מובייל – מסתירים */
+@media (max-width: 600px){
+  .pp-help-stick{ display: none; }
+}
+
+.pp-help-stick.is-scrolling{
+  transition: transform 120ms ease-out;
+}
+
+
+
+/* הבמה הראשית של התמונה */
+.pp-main { position: relative; }
+
+/* כפתור הזום: נשאר בשמאל-למעלה */
+.pp-zoom-btn {
+  position: absolute;
+  inset-inline-end: 15px; /* שמאל */
+  inset-block-start: 15px;  /* למעלה */
+  z-index: 3;
+}
+
+/* הלב – מול הזום (ימין-למעלה). ללא רקע/מסגרת – כמו בתמונה */
+.pp-fav-btn {
+  position: absolute;
+  inset-inline-start: 20px;   /* ימין */
+  inset-block-start: 20px;  /* למעלה */
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #666;              /* לא מסומן: אפור דק */
+}
+
+.pp-fav-btn:hover    { color: #222; }
+.pp-fav-btn:active   { transform: scale(0.96); }
+.pp-fav-btn:focus-visible { outline: none; }
+
+/* מסומן = אדום מלא */
+.pp-fav-btn[data-liked="true"] { color: #e02424; }
+
+
+
+@media (max-width: 600px){
+  .look-section.look--sm{
+    --sm-card-w: 150px;
+    --sm-gap: 10px;
+  }
+
+  /* 👇 כאן הכוח – במובייל 3 כרטיסיות בשורה */
+  .look-section.look--sm .look-track{
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: var(--sm-gap) !important;
+    justify-content: center !important;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 600px){
+  /* 2 מוצרים בשורה במובייל */
+  .products-grid--right{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    transform: none; /* שלא יזוזו הצידה במובייל */
+    justify-content: center;
+  }
+
+  .products-grid--right > *{
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 auto; /* בטחון – מבטל את הרוחב הקשיח מהדסקטופ */
+  }
+}
+
+

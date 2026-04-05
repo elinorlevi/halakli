@@ -1,0 +1,1609 @@
+
+
+/* From Uiverse.io by Yaya12085 – גרסת cardError */
+.cardError {
+  /* בסיס לפופאפ הקטן בלבד */
+  max-width: 290px;
+}
+
+.cardError .dismiss {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  color: black;
+  border: 2px solid #206ad800;
+  font-size: 1rem;
+  font-weight: 300;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  transition: .3s ease;
+  cursor: pointer;
+}
+
+
+.cardError .header {
+  padding: 1.25rem 1rem 1rem 1rem;
+}
+
+.cardError .image {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  animation: animate .6s linear alternate-reverse infinite;
+  transition: .6s ease;
+}
+
+.cardError .image svg {
+  color: #000000;
+  width: 2rem;
+  height: 2rem;
+}
+
+.cardError .content {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.cardError .title {
+  color: #eb0c0c;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cardError .message {
+  margin-top: 0.5rem;
+  color: #4c4a4a;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.cardError .actions {
+  margin: 0.75rem 1rem 1rem;
+}
+
+.cardError .history {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  background-color: #eb0c0c;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.cardError .track {
+  display: inline-flex;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  color: #242525;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #D1D5DB;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+@keyframes animate {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.09);
+  }
+}
+
+/* ===== BACKDROP כללי למודאל עריכה (משתמש באותו confirm-backdrop) ===== */
+
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* שחור שקוף מאחורה */
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;    /* מרכז אנכי */
+  justify-content: center;/* מרכז אופקי */
+  z-index: 9999;
+}
+
+
+/* ===== כרטיס עריכה – מותאם לסגנון acct-* ===== */
+
+.cardError.cardEdit {
+   position: relative;  
+  background: #ffffff;
+  color: #111;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1100px;        /* במקום max-width מ- .cardError */
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.20);
+  padding: 24px 32px 24px;  /* במקום 16px 300px 18px */
+}
+
+/* כפתור X בפינה */
+.cardError.cardEdit .dismiss {
+  position: absolute;
+  top: 16px;
+  right: 16px; 
+    left: auto;    /* מבטל את left הישן */
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid #e4e4e400;
+  background: #ffffff00;
+  color: #444;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+
+
+
+/* HEADER למעלה – אייקון + טקסט */
+.cardEdit .header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* אפשר להחביא את העיגול/אייקון אם לא צריך – או להשאיר */
+.cardEdit .image {
+  display: none; /* אם תרצי אייקון – תבטלי את השורה הזו */
+}
+
+.cardEdit .content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* כותרת המודל */
+.cardEdit .title {
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align:center;
+  color: #000;
+}
+
+/* טקסט עזר תחת הכותרת */
+.cardEdit .message {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  direction: rtl;
+}
+
+/* ===== GRID של הטופס ===== */
+
+.product-edit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 16px 20px;
+  align-items: flex-start;
+}
+
+/* עמודת השדות ה״רגילים״ */
+.product-edit-main {
+  display: grid;
+  gap: 12px;
+}
+
+/* עמודת התמונות / פרטים נוספים */
+.product-edit-side {
+  display: grid;
+  gap: 12px;
+}
+
+.product-edit-grid-2 {
+  display: grid;
+  gap: 8px;
+  justify-content: center;
+  text-align: center;
+}
+
+.product-edit-grid-2 .edit-field input,
+.product-edit-grid-2 input[type="number"] {
+  text-align: center !important;
+  direction: ltr;
+  max-width: 200px;
+  margin-inline: auto;
+}
+
+
+@media (max-width: 900px) {
+  .product-edit-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .product-edit-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .product-edit-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ===== שדות טופס ===== */
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  direction: rtl;
+}
+
+.edit-field label {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #444;
+  
+}
+
+.edit-field small {
+  font-size: 11px;
+  color: #999;
+  
+}
+
+.edit-field input,
+.edit-field textarea,
+.edit-field select {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #ffffff;
+  box-sizing: border-box;
+  direction: rtl;
+  text-align: right;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+/* מחיר / מספרים – LTR */
+.edit-field input[type="number"],
+.edit-field input[data-dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+.edit-field textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus,
+.edit-field select:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 1px #111;
+  
+}
+
+/* ===== בלוק שגיאה קטן בשורה ===== */
+.product-edit-errors {
+  margin-top: 4px;
+  color: #d32f2f;
+  font-size: 13px;
+  direction: rtl;
+}
+
+/* אם יש שגיאה – הדגש מסגרת באדום */
+.cardEdit .has-error input,
+.cardEdit .has-error textarea,
+.cardEdit .has-error select {
+  border-color: #e03131;
+  color: #b00000;
+}
+
+/* ===== אזור תחתון: כפתורים ===== */
+
+.cardEdit .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f1f1;
+}
+
+/* כפתור שמירה – כמו acct-btn אבל עגול יותר */
+.cardEdit .history {
+  min-width: 130px;
+  height: 42px;
+  border: 2px solid #111;
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding-inline: 18px;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.1s ease;
+    margin-top: 12.8px;
+}
+
+.cardEdit .history:hover:not(:disabled),
+.cardEdit .history:focus-visible:not(:disabled) {
+  background: #f8949c;
+  border-color: #f8949c;
+}
+
+.cardEdit .history:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* קופסה כללית של אזור התמונות */
+.product-edit-images-box {
+  padding: 12px 5px;
+  background: transparent;
+  border: none;
+  border-right: 2px solid #e1e1e1;
+
+}
+
+/* כותרת עליונה */
+.product-edit-images-box-title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #444;
+  margin-bottom: 6px;
+  text-align: center;
+  
+}
+
+/* ===== גריד ריבועים לתמונות ===== */
+.product-images-list {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 8px;
+  max-height: none;
+  padding-right: 0;
+}
+
+/* תא של תמונה – גובה דינמי לפי התמונה */
+.product-image-row {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;        /* טיפה מרווח מסביב */
+}
+
+/* העטיפה של התמונה */
+.product-image-thumb {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* התמונה עצמה – בלי חיתוך, בדיוק כמו באתר */
+.product-image-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;          /* שומר יחס מקורי */
+  object-fit: contain;   /* לא חותך כלום */
+}
+
+
+/* כפתורי פעולה (מחיקה וכו') – בפינה השמאלית העליונה */
+.product-image-actions {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: flex;
+  gap: 4px;
+}
+
+.product-image-actions button {
+  border-radius: 999px;
+  border: 1px solid #d3d3d3;
+  background: rgba(255, 255, 255, 0.95);
+  color: #444;
+  font-size: 10px;
+  padding: 2px 1px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    color 0.12s ease,
+    transform 0.06s ease;
+}
+
+/* מחיקה – אדום עדין */
+.product-image-actions button.product-image-delete {
+  border-color: #f1b5b500;
+  color: #b32626;
+  background: #fff7f700;
+}
+
+.product-image-actions button.product-image-delete:hover {
+  border-color: #e07b7b00;
+  background: #fee2e200;
+}
+
+/* ===== ריבוע ה-+ להוספת תמונה ===== */
+.product-image-add-tile {
+  /* חשוב – שלא יהיה 25%, שהגריד יקבע את הרוחב */
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;       /* ריבוע כמו שאר התמונות */
+  border-radius: 8px;
+  border: 1px dashed #cfcfcf;
+  background: #ffffff;
+margin-right: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  color: #777;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.08s ease;
+}
+
+.product-image-add-tile span.plus {
+  font-size: 26px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+
+/* רספונסיביות */
+@media (max-width: 640px) {
+  .cardError.cardEdit {
+    max-width: 96vw;
+    padding: 16px 12px 14px;
+  }
+  .product-image-row {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+  .product-image-thumb {
+    justify-self: flex-start;
+  }
+  .product-image-url {
+    width: 100%;
+  }
+  .product-image-actions {
+    justify-content: flex-start;
+  }
+}
+
+.product-edit-primary {
+  margin-top: 10px;
+}
+
+.product-primary-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.product-primary-thumb {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 80px;
+}
+
+.product-primary-thumb img {
+  width: 100%;
+  height: 100%;
+  max-height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.product-primary-placeholder {
+  font-size: 12px;
+  color: #9ca3af;
+  padding: 6px;
+  text-align: center;
+}
+
+.product-primary-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-primary-controls input[type="text"] {
+  width: 100%;
+}
+
+.product-primary-upload {
+  padding: 6px 10px;
+}
+
+
+.product-primary-row {
+  display: flex;
+  align-items: center;
+}
+
+/* המסגרת של התמונה הראשית */
+.product-primary-thumb {
+  position: relative;
+  max-width: 140px;      /* אפשר לשחק עם זה */
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;   /* רקע לבן */
+  display: block;
+    display: flex;
+  flex-direction: column;
+}
+
+/* התמונה עצמה – בדיוק כמו באתר */
+.product-primary-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;          /* גובה לפי יחס התמונה המקורי */
+  object-fit: contain;   /* לא חותך כלום */
+}
+
+.product-edit-primary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* מרכז אופקי */
+}
+
+
+/* טקסט placeholder כשאין תמונה */
+.product-primary-placeholder {
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+}
+
+/* אייקון עריכה – מעל התמונה, שמאל למעלה */
+.product-primary-upload {
+  position: absolute;
+  top: -4px;
+  right: 44px;               /* ← שמאל למעלה */
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(127, 13, 13, 0);
+  background: rgba(67, 255, 4, 0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.product-primary-upload:hover {
+  border-color: #11111100;
+}
+
+.product-primary-upload svg {
+  pointer-events: none; /* שהקליק יעבור ל-label / input */
+}
+
+.admin-add-product-wrapper {
+  margin: 8px 0 16px;
+  text-align: left; /* אם את רוצה מימין תחליפי ל right */
+}
+
+/* כפתור "הוספת מוצר" */
+.admin-add-product-btn {
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  color: #000000;
+  border: none; 
+    padding: 1px 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* אפקט ריחוף */
+.admin-add-product-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+/* לחיצה */
+.admin-add-product-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.admin-add-product-wrapper {
+  margin: 1px 0 16px;
+  display: flex;
+  align-items: center;
+    justify-content: flex-end;
+  gap: 10px;           /* רווח קטן בין הכפתור לקו */
+}
+
+/* הקו האנכי בצד ימין */
+.admin-vertical-divider {
+  width: 1px;            /* עובי הקו */
+  height: 50px;          /* גובה – אפשר להתאים */
+  background-color: #e4e3e3; /* צבע שחור */
+}
+
+.full-divider {
+  border: none;
+  border-top: 0.1px solid #e4e1e1; /* עובי וצבע */
+  margin: 20px 0; /* רווח מלמעלה ומלמטה */
+  width: 100%;
+}
+
+
+
+/* כפתור קופון – אותו עיצוב, אפשר לשחק רק באייקון/צבע אם תרצי */
+.admin-add-coupon-btn {
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  color: #000000;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+}
+
+
+.admin-products-table-wrapper {
+  max-height: 450px;       /* כמה גובה שאתה רוצה לחלון הטבלה */
+  overflow-y: auto;        /* גלילה אנכית */
+  overflow-x: auto;        /* למקרה שיש הרבה עמודות */
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+/* שיהיה יותר קריא כשגוללים – הכותרות נשארות קבועות */
+.admin-products-table-wrapper .admin-coupons-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-products-table-wrapper .admin-coupons-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.rte-wrapper {
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 12px;
+  background: rgba(242, 242, 243, 0.589);
+  border-color: transparent; 
+  overflow: hidden;
+   box-shadow: none !important;
+  font-size: 14px;
+  max-width: 520px;    /* כמה צר שתרצי – אפשר לשחק עם המספר */
+  width: 100%;
+  margin: 0 auto;      /* מרכז באמצע */
+}
+
+.rte-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(83, 84, 87, 0.163);
+  background: rgba(9, 9, 9, 0.929);
+}
+
+.rte-toolbar button {
+  border: 1px solid rgba(79, 86, 96, 0.6);
+  background: rgba(66, 66, 66, 0.162);
+  color: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.rte-toolbar button.is-active {
+  background: rgba(83, 83, 83, 0.2);
+  border-color: rgb(0, 0, 0);
+}
+
+.rte-sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(96, 96, 96, 0.425);
+  margin: 0 4px;
+}
+
+.rte-editor {
+  min-height: 160px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px 12px;
+  line-height: 1.6;
+  color: #070606;
+}
+
+/* בתוך העורך בלבד */
+.rte-editor h1,
+.rte-editor h2,
+.rte-editor h3,
+.rte-editor h4,
+.rte-editor h5,
+.rte-editor h6 {
+  margin-top: 0.3em;   /* במקום 0.67em או יותר */
+  margin-bottom: 0.2em;
+  line-height: 1.3;
+}
+
+.rte-editor p {
+  margin-top: 0.15em;
+  margin-bottom: 0.15em;
+  line-height: 1.4;
+}
+
+.rte-editor {
+  direction: rtl;
+  text-align: right;
+}
+
+.rte-editor img,
+.vlog-body-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ברירת מחדל – גדולה */
+.vlogpage-content img.vlog-body-image[data-size="large"] {
+  max-width: 100%;
+  display: block;
+  margin: 16px auto;
+}
+
+/* בינונית */
+.vlogpage-content img.vlog-body-image[data-size="medium"] {
+  max-width: 60%;
+  display: block;
+  margin: 16px auto;
+}
+
+/* קטנה */
+.vlogpage-content img.vlog-body-image[data-size="small"] {
+  max-width: 35%;
+  display: block;
+  margin: 16px auto;
+}
+
+/* חשוב: אם יש לך כלל כללי כזה – תשאירי אותו מעל הכללים שלמעלה */
+.vlogpage-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--vp-border);
+  box-shadow: 0 12px 24px rgba(0,0,0,.06);
+}
+
+/* בתוך העורך – כשרק התמונה נבחרת, תראי מסגרת ורודה */
+.rte-editor img.ProseMirror-selectednode,
+.rte-editor .ProseMirror-selectednode {
+  outline: 2px solid #f8949c;
+  outline-offset: 2px;
+}
+
+/* גדלים בתוך העורך (Admin) */
+.rte-editor img.vlog-body-image[data-size="large"] {
+  max-width: 100%;
+  display: block;
+  margin: 16px auto;
+}
+
+.rte-editor img.vlog-body-image[data-size="medium"] {
+  max-width: 60%;
+  display: block;
+  margin: 16px auto;
+}
+
+.rte-editor img.vlog-body-image[data-size="small"] {
+  max-width: 35%;
+  display: block;
+  margin: 16px auto;
+}
+
+/* כלל כללי (יכול להישאר) */
+.vlogpage-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--vp-border);
+  box-shadow: 0 12px 24px rgba(0,0,0,.06);
+}
+
+/* גדלים לפי data-size בעמוד הוולוג עצמו */
+.vlogpage-content img.vlog-body-image[data-size="large"] {
+  max-width: 100%;
+  display: block;
+  margin: 16px auto;
+}
+
+.vlogpage-content img.vlog-body-image[data-size="medium"] {
+  max-width: 60%;
+  display: block;
+  margin: 16px auto;
+}
+
+.vlogpage-content img.vlog-body-image[data-size="small"] {
+  max-width: 35%;
+  display: block;
+  margin: 16px auto;
+}
+
+/* ביטול המסגרת/גבול של אזור העריכה עצמו */
+.rte-editor.ProseMirror {
+ border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent; /* או #fff אם את רוצה לבן */
+}
+
+.rte-editor.ProseMirror:focus,
+.rte-editor.ProseMirror:focus-visible,
+.rte-editor.ProseMirror:focus-within {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* בסיס לכל הסלקטים בטולבר */
+.rte-toolbar .rte-select {
+  flex: 0 0 auto;        /* לא להתפרס על כל הרוחב */
+  display: inline-block;
+  height: 26px;
+  font-size: 11px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #ffffff;
+  color: #111827;        /* כדי שהטקסט ייראה ברור */
+  outline: none;
+  margin-inline-end: 4px;
+}
+
+/* גודל – קטן יותר */
+.rte-toolbar .rte-select-size {
+  width: 60px;
+  text-align: center;
+}
+
+/* גופן – קצת יותר רחב לשמות הפונטים */
+.rte-toolbar .rte-select-font {
+  width: 130px;
+}
+
+.admin-shell {
+  background-attachment: scroll !important;
+}
+
+.admin-shell::after {
+  content: none !important;      /* מבטל את השכבה הכהה מעל כל הדף */
+  background: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* אם עדיין יש תחושה של "ערפל"/כהות – אפשר גם לבטל את ה-blur מהפאנלים */
+.admin-shell-aside,
+.adm-panel,
+.adm-panel-group {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* ========================= */
+/*   מובייל – פרטי הזמנה    */
+/* ========================= */
+@media (max-width: 768px) {
+  /* את הפאנל הקבוע בצד אנחנו מסתירים במובייל,
+     כי במקום זה יש חלון (מודל) */
+  .adm-sidepanel--desktop {
+    display: none;
+  }
+
+  /* שהטבלה והפאנל יהיו אחד מתחת לשני (אם יש עוד CSS – זה לא מזיק) */
+  .admin-shell-main > div[dir="rtl"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* לא צריך גלילה שמאלה – מבטלת כל min-width שנתנו לפני */
+  .admin-shell-main > div[dir="rtl"] .adm-thead,
+  .admin-shell-main > div[dir="rtl"] .adm-row {
+    min-width: 0;
+  }
+
+  /* חלון פרטי ההזמנה */
+  .adm-order-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 90;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .adm-order-modal {
+    position: relative;
+    margin-top: 60px;
+    width: 94%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.96);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 14px 14px 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+  }
+
+  .adm-order-modal-close {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 10px; /* שמאל ב-RTL */
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  /* הקונטיינר של ניהול ההזמנות – שיהיה מסך מלא במובייל */
+  .admin-shell-main > div[dir="rtl"] {
+    display: block !important;     /* במקום grid */
+    width: 90% !important;        /* כל הרוחב */
+  }
+
+  /* הכרטיס הראשי של הטבלה – גם שיקח 100% */
+  .admin-shell-main > div[dir="rtl"] .adm-panel {
+    width: 100%;
+  }
+}
+
+
+
+/* ========================= */
+/*   MOBILE FULL-SCREEN MODALS   */
+/* ========================= */
+@media (max-width: 768px) {
+  /* הרקע של המודאל – שימלא את כל המסך בלי שוליים */
+  .confirm-backdrop {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  /* כרטיס עריכה – שיהפוך למסך מלא במובייל */
+  .cardError.cardEdit {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    overflow-y: auto;
+    padding: 14px 12px 18px;
+    box-sizing: border-box;
+  }
+
+  /* כפתור X למעלה בפינה – שיישב יפה גם במסך מלא */
+  .cardError.cardEdit .dismiss {
+    top: 10px;
+    left: 10px;
+  }
+
+  /* אזור הכפתורים בתחתית – שיישאר צמוד לתחתית */
+  .cardEdit .actions {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.96);
+    padding-top: 8px;
+    padding-bottom: 10px;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* ========================= */
+/*   מובייל – טבלת הזמנות   */
+/*   טבלה אמיתית, בלי גלילה שמאלה */
+/* ========================= */
+@media (max-width: 768px) {
+  /* הקונטיינר של ניהול ההזמנות – שיקח את כל הרוחב */
+  .admin-shell-main > div[dir="rtl"] {
+    display: block !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0 10px;         /* מרווח קטן מהצדדים */
+    box-sizing: border-box;
+  }
+
+  /* פאנל הטבלה */
+  .admin-shell-main > div[dir="rtl"] .adm-panel {
+    width: 95%;
+  }
+
+  /* הטבלה – בלי גלילה אופקית */
+  .adm-table {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* גם הכותרות וגם השורות – grid עם עמודות דחוסות */
+  .adm-thead,
+  .adm-row {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.1fr)   /* מס' הזמנה */
+      minmax(0, 1.3fr)   /* תאריך/שעה */
+      minmax(0, 1.6fr)   /* לקוח */
+      minmax(0, 0.9fr)   /* סכום */
+      minmax(0, 1.1fr)   /* סטטוס */
+      minmax(0, 0.8fr)   /* פעולה */
+      !important;
+    column-gap: 4px;
+  }
+
+  /* התאים עצמם – פונט קטן, שבירת שורות */
+  .adm-thead > div,
+  .adm-row > div {
+    font-size: 10px;
+    padding: 4px 2px;
+    white-space: normal;     /* לא nowrap */
+    word-break: break-word;  /* גם טלפונים/אימיילים נשברים יפה */
+  }
+
+  /* השורה עצמה – קצת פחות מרווחת כדי להכניס הכל */
+  .adm-row {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  /* תג סטטוס – גם להקטין קצת שיהיה מקום */
+  .adm-badge {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+
+  /* כפתור "צפי" – קטן ועדין, שלא יגנוב מקום */
+  .adm-link-btn {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+}
+
+/* ========================= */
+/*   מובייל – טבלת מוצרים   */
+/*   בלי JS, רק CSS ונth-child */
+/* ========================= */
+@media (max-width: 768px) {
+  .admin-products-table-wrapper {
+    max-height: none;
+    overflow-x: hidden;
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table thead {
+    display: none;
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table tbody {
+    display: block;
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table tbody tr {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(70, 70, 72, 0.574);
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 11px;
+    padding: 3px 0;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* לייבלים לכל עמודת מוצר, לפי הסדר בטבלה שלך */
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(1)::before {
+    content: "ID";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(2)::before {
+    content: "שם מוצר";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(3)::before {
+    content: "מחיר רגיל";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(4)::before {
+    content: "מחיר אחרי הנחה";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(5)::before {
+    content: "סוג הנחה";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(6)::before {
+    content: "ערך הנחה";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(7)::before {
+    content: "מלאי";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(8)::before {
+    content: "תמונה";
+  }
+  .admin-products-table-wrapper .admin-coupons-table tbody td:nth-child(9)::before {
+    content: "פעולות";
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table tbody td::before {
+    font-weight: 600;
+    margin-left: 6px;
+    color: rgba(226, 232, 240, 0.9);
+  }
+
+  .admin-products-table-wrapper .admin-coupons-table tbody td img {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+}
+/* ========================= */
+/*   מובייל – טבלת קופונים  */
+/* ========================= */
+@media (max-width: 768px) {
+  .admin-coupons-table-wrapper {
+    overflow-x: hidden;
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table {
+    width: 100%;
+    display: block;
+    border-collapse: collapse;
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table thead {
+    display: none;
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table tbody {
+    display: block;
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table tbody tr {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(70, 70, 72, 0.574);
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 11px;
+    padding: 3px 0;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* לייבלים לפי הסדר של העמודות בקופונים */
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(1)::before {
+    content: "קוד קופון";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(2)::before {
+    content: "סוג";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(3)::before {
+    content: "ערך";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(4)::before {
+    content: "קטגוריה";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(5)::before {
+    content: "מינימום לעגלה";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(6)::before {
+    content: "תאריך התחלה";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(7)::before {
+    content: "תאריך סיום";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(8)::before {
+    content: "מקס' שימושים";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(9)::before {
+    content: "למשתמש";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(10)::before {
+    content: "פעיל?";
+  }
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td:nth-child(11)::before {
+    content: "פעולות";
+  }
+
+  .admin-coupons-table-wrapper .admin-coupons-table tbody td::before {
+    font-weight: 600;
+    margin-left: 6px;
+    color: rgba(226, 232, 240, 0.9);
+  }
+
+  .coupon-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
+/* ========================= */
+/*   מובייל – מודאלים יפים   */
+/* ========================= */
+@media (max-width: 768px) {
+  /* הרקע מאחורה */
+  .confirm-backdrop {
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  /* כרטיס המודאל (מוצר + קופון) */
+  .cardError.cardEdit {
+    width: 100%;
+    max-width: 96vw;
+    max-height: calc(100vh - 20px);
+    margin: 10px auto;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: radial-gradient(
+        circle at 0 0,
+        rgba(255, 255, 255, 0.06),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 100% 100%,
+        rgba(255, 255, 255, 0.05),
+        transparent 55%
+      ),
+      #111111;
+    box-shadow: 0 24px 80px rgba(6, 6, 6, 0.766);
+    padding: 14px 14px 10px;
+    overflow-y: auto;
+  }
+
+  /* כפתור X */
+  .cardError.cardEdit .dismiss {
+    top: 10px;
+    left: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: rgba(13, 14, 15, 0.19);
+    color: #f9fafb;
+  }
+
+  /* כותרת וטקסט */
+  .cardEdit .title {
+    font-size: 17px;
+    letter-spacing: 0;
+    text-transform: none;
+    text-align: right;
+    color: #f9fafb;
+  }
+
+  .cardEdit .message {
+    font-size: 13px;
+    color: rgba(241, 245, 249, 0.75);
+  }
+
+  /* שדות */
+  .edit-field label {
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #a5a1a1;
+  }
+
+  .edit-field input,
+  .edit-field textarea,
+  .edit-field select {
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    font-size: 13px;
+  }
+
+  .edit-field input::placeholder,
+  .edit-field textarea::placeholder {
+    color: rgba(148, 163, 184, 0.9);
+  }
+
+  .edit-field input:focus,
+  .edit-field textarea:focus,
+  .edit-field select:focus {
+    border-color: #f97373;
+    box-shadow: 0 0 0 1px #f97373;
+  }
+
+  /* גריד פנימי – שיהיה טור אחד במובייל */
+  .product-edit-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .product-edit-images-box {
+    border-right: none;
+    border-top: 1px solid rgba(148, 163, 184, 0.35);
+    padding-top: 10px;
+  }
+
+  /* כפתורי שמירה/ביטול – דבוקים למטה */
+  .cardEdit .actions {
+    position: sticky;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.399);
+    color:#000;
+    margin-left: -14px;
+    margin-right: -14px;
+    padding: 8px 14px 10px;
+    gap: 8px;
+  }
+
+  .cardEdit .history {
+    min-width: 120px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #f97373, #fb7185);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  .cardEdit .track {
+    min-width: 90px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(143, 144, 146, 0.9);
+    background: transparent;
+    color: #e5e7eb;
+    font-size: 13px;
+  }
+}
+
+/* ===== גלילה וסקרולבר במובייל לחלון העריכה ===== */
+@media (max-width: 768px) {
+  .cardError.cardEdit {
+    max-height: calc(100vh - 20px);   /* לא יעבור את המסך */
+    overflow-y: auto;                 /* מאפשר גלילה */
+    -webkit-overflow-scrolling: touch;
+    
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+  }
+
+  /* Chrome / Edge / Android */
+  .cardError.cardEdit::-webkit-scrollbar {
+    width: 6px;                       /* פס צר כמו בתמונה */
+  }
+
+  .cardError.cardEdit::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .cardError.cardEdit::-webkit-scrollbar-thumb {
+    background: #d5d5d5;
+    border-radius: 999px;
+  }
+
+  .cardError.cardEdit::-webkit-scrollbar-thumb:hover {
+    background: #c4c4c4;
+  }
+}
+
+/* ===== MOBILE: X בפינה הימנית של המודאל ===== */
+@media (max-width: 768px) {
+  .cardError.cardEdit .dismiss {
+    top: 10px;
+    right: 10px;
+    left: auto;
+    inset-inline-end: 10px;
+    inset-inline-start: auto;
+  }
+}
+/* ===== MOBILE: גלילה + סקרולבר לטבלת מוצרים ===== */
+@media (max-width: 768px) {
+  .admin-products-table-wrapper {
+    max-height: 70vh;              /* גובה מקסימלי למסך */
+    overflow-y: auto;              /* גלילה למוצרים */
+    overflow-x: hidden;            /* בלי גלילה לצדדים */
+    -webkit-overflow-scrolling: touch;
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+  }
+
+  /* Chrome / Edge / Android */
+  .admin-products-table-wrapper::-webkit-scrollbar {
+    width: 6px; /* פס דק */
+  }
+
+  .admin-products-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .admin-products-table-wrapper::-webkit-scrollbar-thumb {
+    background: #d5d5d5;
+    border-radius: 999px;
+  }
+
+  .admin-products-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #c4c4c4;
+  }
+}
+/* ===== MOBILE: גלילה + סקרולבר לטבלת קופונים ===== */
+@media (max-width: 768px) {
+  .admin-coupons-table-wrapper {
+    max-height: 70vh;              /* גובה מקסימלי למסך */
+    overflow-y: auto;              /* גלילה לקופונים */
+    overflow-x: hidden;            /* בלי גלילה לצדדים */
+    -webkit-overflow-scrolling: touch;
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+  }
+
+  /* Chrome / Edge / Android */
+  .admin-coupons-table-wrapper::-webkit-scrollbar {
+    width: 6px; /* פס דק */
+  }
+
+  .admin-coupons-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .admin-coupons-table-wrapper::-webkit-scrollbar-thumb {
+    background: #d5d5d5;
+    border-radius: 999px;
+  }
+
+  .admin-coupons-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #c4c4c4;
+  }
+}
+
+
+/* ===== DESKTOP: גלילה לטבלת קופונים ===== */
+.admin-coupons-table-wrapper {
+  max-height: 75vh;          /* לא יגלוש מהמסך */
+  overflow-y: auto;          /* גלילה אנכית */
+  overflow-x: hidden;        /* בלי גלילה צד */
+  -webkit-overflow-scrolling: touch;
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #cfcfcf transparent;
+}
+
+/* Chrome / Edge / Safari scrollbar */
+.admin-coupons-table-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-coupons-table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-coupons-table-wrapper::-webkit-scrollbar-thumb {
+  background: #cfcfcf;
+  border-radius: 999px;
+}
+
+.admin-coupons-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #bcbcbc;
+}
+
+
